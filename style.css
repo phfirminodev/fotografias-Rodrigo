@@ -1405,3 +1405,117 @@ button {
     scroll-behavior: auto !important;
   }
 }
+
+/* ==========================================================================
+   16. DESTAQUES NA HOME & GALERIA POR LINHA DO TEMPO (galeria.html)
+   ========================================================================== */
+.highlights-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 3.5rem;
+}
+
+@media (max-width: 900px) {
+  .highlights-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    max-width: 520px;
+    margin: 3rem auto 0;
+  }
+}
+
+.gallery-page-hero {
+  padding: clamp(7rem, 12vw, 9.5rem) 0 3.5rem;
+  text-align: center;
+  background-color: var(--bg-canvas);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.gallery-page-hero .section-heading {
+  margin: 0.5rem 0 1rem;
+}
+
+.gallery-timeline-nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2.25rem;
+}
+
+.timeline-nav-btn {
+  font-family: var(--font-accent);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  padding: 8px 18px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  background: transparent;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.timeline-nav-btn:hover,
+.timeline-nav-btn.active {
+  color: var(--bg-canvas);
+  background-color: var(--text-primary);
+  border-color: var(--text-primary);
+}
+
+.gallery-section-block {
+  padding: 5rem 0 4rem;
+  border-bottom: 1px solid var(--border-subtle);
+  scroll-margin-top: 5rem;
+}
+
+.gallery-section-block:last-of-type {
+  border-bottom: none;
+}
+
+.timeline-header {
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+
+.timeline-date-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-accent);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent-terracotta);
+  margin-bottom: 0.6rem;
+}
+
+.timeline-date-badge::before {
+  content: '';
+  display: inline-block;
+  width: 28px;
+  height: 1px;
+  background-color: var(--accent-terracotta);
+}
+
+.timeline-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 3.8vw, 2.75rem);
+  font-weight: 400;
+  color: var(--text-primary);
+  margin: 0.25rem 0 0.5rem;
+}
+
+.timeline-meta {
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  font-weight: 300;
+}
+
