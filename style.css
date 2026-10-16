@@ -1411,17 +1411,35 @@ button {
    ========================================================================== */
 .highlights-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr) !important;
   gap: 2rem;
   margin-top: 3.5rem;
+  align-items: stretch;
 }
 
-@media (max-width: 900px) {
+.highlights-grid .gallery-card,
+.highlights-grid .item-tall,
+.highlights-grid .item-standard,
+.highlights-grid .item-wide {
+  grid-column: span 1 !important;
+  width: 100%;
+}
+
+.highlights-grid .gallery-btn {
+  aspect-ratio: 3 / 4.2 !important;
+}
+
+@media (max-width: 768px) {
   .highlights-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    max-width: 520px;
-    margin: 3rem auto 0;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .highlights-grid {
+    gap: 0.5rem;
   }
 }
 
