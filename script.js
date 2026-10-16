@@ -92,8 +92,9 @@ function initGalleryFilter() {
       const filterValue = tab.getAttribute('data-filter');
 
       cards.forEach(card => {
-        const category = card.getAttribute('data-category');
-        if (filterValue === 'all' || category === filterValue) {
+        const category = card.getAttribute('data-category') || '';
+        const categories = category.split(' ');
+        if (filterValue === 'all' || categories.includes(filterValue) || category === filterValue) {
           card.classList.remove('hide');
           card.style.opacity = '0';
           card.style.transform = 'translateY(12px)';
@@ -125,12 +126,16 @@ function initLightboxDialog() {
 
   if (!dialog) return;
 
-  const galleryCards = Array.from(document.querySelectorAll('.gallery-card'));
+  const getAllCards = () => Array.from(document.querySelectorAll('.gallery-card'));
+  const getVisibleCards = () => getAllCards().filter(c => !c.classList.contains('hide'));
   let currentIndex = 0;
+  let activeCards = [];
 
   // Carrega os dados da foto pelo índice
   const loadPhoto = (index) => {
-    const card = galleryCards[index];
+    if (!activeCards.length) activeCards = getVisibleCards();
+    if (!activeCards.length) activeCards = getAllCards();
+    const card = activeCards[index];
     if (!card) return;
 
     const img = card.querySelector('img');
@@ -138,20 +143,29 @@ function initLightboxDialog() {
     const category = card.querySelector('.card-category')?.textContent || '';
     const location = card.querySelector('.card-location')?.textContent || '';
 
-    dialogImg.src = img.src;
-    dialogImg.alt = img.alt;
-    dialogTitle.textContent = title;
-    dialogCategory.textContent = category;
-    dialogLocation.textContent = location;
+    if (dialogImg && img) {
+      dialogImg.src = img.src;
+      dialogImg.alt = img.alt;
+    }
+    if (dialogTitle) dialogTitle.textContent = title;
+    if (dialogCategory) dialogCategory.textContent = category;
+    if (dialogLocation) dialogLocation.textContent = location;
+    const dialogDetails = document.querySelector('.dialog-details');
+    if (dialogDetails) {
+      dialogDetails.style.display = (title || category || location) ? 'block' : 'none';
+    }
     currentIndex = index;
   };
 
   // Abre dialog ao clicar em qualquer card
-  galleryCards.forEach((card, idx) => {
+  getAllCards().forEach((card) => {
     const btn = card.querySelector('.gallery-btn');
     if (btn) {
       btn.addEventListener('click', () => {
-        loadPhoto(idx);
+        activeCards = getVisibleCards();
+        if (!activeCards.length) activeCards = getAllCards();
+        const idx = activeCards.indexOf(card);
+        loadPhoto(idx >= 0 ? idx : 0);
         dialog.showModal();
         document.body.style.overflow = 'hidden';
       });
@@ -168,13 +182,15 @@ function initLightboxDialog() {
   // Navegação anterior / próximo
   prevBtn?.addEventListener('click', (e) => {
     e.stopPropagation();
-    currentIndex = (currentIndex - 1 + galleryCards.length) % galleryCards.length;
+    if (!activeCards.length) activeCards = getVisibleCards();
+    currentIndex = (currentIndex - 1 + activeCards.length) % activeCards.length;
     loadPhoto(currentIndex);
   });
 
   nextBtn?.addEventListener('click', (e) => {
     e.stopPropagation();
-    currentIndex = (currentIndex + 1) % galleryCards.length;
+    if (!activeCards.length) activeCards = getVisibleCards();
+    currentIndex = (currentIndex + 1) % activeCards.length;
     loadPhoto(currentIndex);
   });
 
@@ -187,7 +203,6 @@ function initLightboxDialog() {
       rect.left <= event.clientX &&
       event.clientX <= rect.left + rect.width
     );
-    // Se clicou fora do dialog interior
     if (event.target === dialog) {
       closeDialog();
     }
@@ -196,10 +211,12 @@ function initLightboxDialog() {
   // Teclado: setas para passar fotos, esc fecha
   dialog.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') {
-      currentIndex = (currentIndex - 1 + galleryCards.length) % galleryCards.length;
+      if (!activeCards.length) activeCards = getVisibleCards();
+      currentIndex = (currentIndex - 1 + activeCards.length) % activeCards.length;
       loadPhoto(currentIndex);
     } else if (e.key === 'ArrowRight') {
-      currentIndex = (currentIndex + 1) % galleryCards.length;
+      if (!activeCards.length) activeCards = getVisibleCards();
+      currentIndex = (currentIndex + 1) % activeCards.length;
       loadPhoto(currentIndex);
     } else if (e.key === 'Escape') {
       document.body.style.overflow = '';
