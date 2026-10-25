@@ -323,11 +323,18 @@ function initHighlightsCarousel() {
   const slides = Array.from(track.querySelectorAll('.gallery-card'));
   if (!slides.length) return;
 
+  const getStep = () => {
+    if (slides.length > 1) {
+      return slides[1].offsetLeft - slides[0].offsetLeft;
+    }
+    return slides[0].offsetWidth || track.clientWidth;
+  };
+
   const updateActiveDot = () => {
+    const step = getStep();
+    if (!step) return;
     const scrollLeft = track.scrollLeft;
-    const slideWidth = slides[0].offsetWidth || track.clientWidth;
-    if (!slideWidth) return;
-    const activeIndex = Math.min(Math.max(0, Math.round(scrollLeft / slideWidth)), slides.length - 1);
+    const activeIndex = Math.min(Math.max(0, Math.round(scrollLeft / step)), slides.length - 1);
 
     dots.forEach((dot, idx) => {
       dot.classList.toggle('active', idx === activeIndex);
@@ -346,12 +353,12 @@ function initHighlightsCarousel() {
   });
 
   prevBtn?.addEventListener('click', () => {
-    const slideWidth = slides[0].offsetWidth || track.clientWidth;
-    track.scrollBy({ left: -slideWidth, behavior: 'smooth' });
+    const step = getStep();
+    track.scrollBy({ left: -step, behavior: 'smooth' });
   });
 
   nextBtn?.addEventListener('click', () => {
-    const slideWidth = slides[0].offsetWidth || track.clientWidth;
-    track.scrollBy({ left: slideWidth, behavior: 'smooth' });
+    const step = getStep();
+    track.scrollBy({ left: step, behavior: 'smooth' });
   });
 }
