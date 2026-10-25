@@ -163,8 +163,9 @@
           </p>
         </div>
 
-        <!-- Três Fotos de Destaque -->
-        <div class="highlights-grid" id="galleryGrid">
+        <!-- Três Fotos de Destaque / Carrossel Mobile -->
+        <div class="highlights-carousel-wrapper">
+          <div class="highlights-grid" id="galleryGrid">
           
           <!-- Destaque 1: Carol & Alex -->
           <article class="gallery-card item-tall">
@@ -211,6 +212,18 @@
             </button>
           </article>
 
+        </div>
+
+          <!-- Controles do Carrossel Mobile -->
+          <div class="highlights-carousel-controls" aria-label="Navegação das fotos de destaque">
+            <button class="carousel-nav-btn prev" id="highlightsPrev" aria-label="Foto anterior">‹</button>
+            <div class="carousel-dots" id="highlightsDots">
+              <button class="carousel-dot active" data-slide="0" aria-label="Foto 1 de 3"></button>
+              <button class="carousel-dot" data-slide="1" aria-label="Foto 2 de 3"></button>
+              <button class="carousel-dot" data-slide="2" aria-label="Foto 3 de 3"></button>
+            </div>
+            <button class="carousel-nav-btn next" id="highlightsNext" aria-label="Próxima foto">›</button>
+          </div>
         </div>
 
         <div class="gallery-cta">

@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initMobileMenu();
   initGalleryFilter();
   initLightboxDialog();
+  initHighlightsCarousel();
   initTestimonialsSlider();
   initContactForm();
 });
@@ -305,5 +306,52 @@ function initContactForm() {
       successCard.style.display = 'block';
       successCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 900);
+  });
+}
+
+/* ==========================================================================
+   CARROSSEL DE DESTAQUES MOBILE (HOME)
+   ========================================================================== */
+function initHighlightsCarousel() {
+  const track = document.getElementById('galleryGrid');
+  const dots = document.querySelectorAll('.carousel-dot');
+  const prevBtn = document.getElementById('highlightsPrev');
+  const nextBtn = document.getElementById('highlightsNext');
+
+  if (!track || !dots.length) return;
+
+  const slides = Array.from(track.querySelectorAll('.gallery-card'));
+  if (!slides.length) return;
+
+  const updateActiveDot = () => {
+    const scrollLeft = track.scrollLeft;
+    const slideWidth = slides[0].offsetWidth || track.clientWidth;
+    if (!slideWidth) return;
+    const activeIndex = Math.min(Math.max(0, Math.round(scrollLeft / slideWidth)), slides.length - 1);
+
+    dots.forEach((dot, idx) => {
+      dot.classList.toggle('active', idx === activeIndex);
+    });
+  };
+
+  track.addEventListener('scroll', updateActiveDot, { passive: true });
+
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      const idx = parseInt(dot.getAttribute('data-slide'), 10);
+      if (slides[idx]) {
+        slides[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    });
+  });
+
+  prevBtn?.addEventListener('click', () => {
+    const slideWidth = slides[0].offsetWidth || track.clientWidth;
+    track.scrollBy({ left: -slideWidth, behavior: 'smooth' });
+  });
+
+  nextBtn?.addEventListener('click', () => {
+    const slideWidth = slides[0].offsetWidth || track.clientWidth;
+    track.scrollBy({ left: slideWidth, behavior: 'smooth' });
   });
 }
