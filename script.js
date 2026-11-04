@@ -127,7 +127,7 @@ function initLightboxDialog() {
 
   if (!dialog) return;
 
-  const getAllCards = () => Array.from(document.querySelectorAll('.gallery-card'));
+  const getAllCards = () => Array.from(document.querySelectorAll('.gallery-card')).filter(c => c.querySelector('.gallery-btn img'));
   const getVisibleCards = () => getAllCards().filter(c => !c.classList.contains('hide'));
   let currentIndex = 0;
   let activeCards = [];

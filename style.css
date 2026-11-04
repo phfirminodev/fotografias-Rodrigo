@@ -1637,3 +1637,177 @@ button {
   font-weight: 300;
 }
 
+
+
+/* ==========================================================================
+   CARDS DE DEPOIMENTO EDITORIAL NA GALERIA (PREENCHIMENTO DE ESPAÇOS EM BRANCO)
+   ========================================================================== */
+.gallery-quote-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: var(--border-radius-sm);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.gallery-quote-card.item-tall {
+  grid-column: span 4;
+  aspect-ratio: 3 / 4.2;
+  padding: 2.25rem 1.85rem;
+}
+
+.gallery-quote-card.item-wide {
+  grid-column: span 8;
+  aspect-ratio: 16 / 9;
+  padding: 2.75rem 3.5rem;
+}
+
+/* Variante Clara (Papiro Editorial) */
+.gallery-quote-card.quote-light {
+  background: #F4F1EA;
+  border: 1px solid rgba(47, 45, 46, 0.12);
+  color: #2F2D2E;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+.gallery-quote-card.quote-light .quote-symbol {
+  color: rgba(82, 79, 61, 0.22);
+}
+
+.gallery-quote-card.quote-light .quote-text {
+  color: #2F2D2E;
+}
+
+.gallery-quote-card.quote-light .quote-divider {
+  background: rgba(140, 83, 62, 0.35);
+}
+
+.gallery-quote-card.quote-light .quote-author {
+  color: #2F2D2E;
+}
+
+.gallery-quote-card.quote-light .quote-meta {
+  color: #736E65;
+}
+
+/* Variante Escura (Grafite Nobre Editorial) */
+.gallery-quote-card.quote-dark {
+  background: #252422;
+  border: 1px solid rgba(234, 230, 220, 0.12);
+  color: #FAF8F5;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.gallery-quote-card.quote-dark .quote-symbol {
+  color: rgba(234, 230, 220, 0.25);
+}
+
+.gallery-quote-card.quote-dark .quote-text {
+  color: #FAF8F5;
+}
+
+.gallery-quote-card.quote-dark .quote-divider {
+  background: rgba(234, 230, 220, 0.3);
+}
+
+.gallery-quote-card.quote-dark .quote-author {
+  color: #FAF8F5;
+}
+
+.gallery-quote-card.quote-dark .quote-meta {
+  color: #B5B1A5;
+}
+
+/* Elementos Internos */
+.quote-content-wrap {
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.quote-symbol {
+  font-family: var(--font-serif);
+  font-size: 3.5rem;
+  line-height: 0.8;
+  margin-bottom: 0.75rem;
+  user-select: none;
+}
+
+.quote-text {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  line-height: 1.65;
+  font-style: italic;
+  margin: 0;
+  font-weight: 400;
+}
+
+.gallery-quote-card.item-wide .quote-text {
+  font-size: 1.35rem;
+  max-width: 620px;
+}
+
+.quote-divider {
+  width: 32px;
+  height: 1px;
+  margin: 1.25rem 0 1.1rem 0;
+}
+
+.quote-author {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-style: normal;
+  display: block;
+}
+
+.quote-meta {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+.gallery-quote-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+}
+
+@media (max-width: 1024px) {
+  .gallery-quote-card.item-tall {
+    grid-column: span 3;
+    aspect-ratio: 3 / 4.2;
+    padding: 1.75rem 1.25rem;
+  }
+  .gallery-quote-card.item-wide {
+    grid-column: span 6;
+    padding: 2.25rem 2rem;
+  }
+  .quote-text {
+    font-size: 1.05rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .gallery-quote-card.item-tall,
+  .gallery-quote-card.item-wide {
+    grid-column: span 1;
+    aspect-ratio: auto;
+    min-height: 270px;
+    padding: 2.25rem 1.5rem;
+  }
+  .quote-text {
+    font-size: 1.05rem;
+  }
+  .gallery-quote-card.item-wide .quote-text {
+    font-size: 1.15rem;
+  }
+}
