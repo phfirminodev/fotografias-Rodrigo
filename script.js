@@ -255,7 +255,7 @@ function initTestimonialsSlider() {
 }
 
 /* ==========================================================================
-   6. FORMULÁRIO DE CONTATO HUMANIZADO
+   6. FORMULÁRIO DE CONTATO HUMANIZADO (INTEGRAÇÃO WHATSAPP)
    ========================================================================== */
 function initContactForm() {
   const form = document.getElementById('contactForm');
@@ -268,6 +268,10 @@ function initContactForm() {
 
     const namesInput = document.getElementById('names');
     const emailInput = document.getElementById('email');
+    const locationInput = document.getElementById('location');
+    const dateInput = document.getElementById('date');
+    const storyInput = document.getElementById('story');
+    const discoverySelect = document.getElementById('discovery');
 
     const namesError = document.getElementById('namesError');
     const emailError = document.getElementById('emailError');
@@ -275,7 +279,8 @@ function initContactForm() {
     let isValid = true;
 
     // Validação Nomes
-    if (!namesInput.value.trim()) {
+    const namesVal = namesInput ? namesInput.value.trim() : '';
+    if (!namesVal) {
       namesError.textContent = 'Por favor, contem-me como devo chamar vocês.';
       namesInput.style.borderColor = '#A33B32';
       isValid = false;
@@ -285,8 +290,9 @@ function initContactForm() {
     }
 
     // Validação E-mail
+    const emailVal = emailInput ? emailInput.value.trim() : '';
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailInput.value.trim() || !emailPattern.test(emailInput.value.trim())) {
+    if (!emailVal || !emailPattern.test(emailVal)) {
       emailError.textContent = 'Precisamos de um e-mail válido para retornar a carta.';
       emailInput.style.borderColor = '#A33B32';
       isValid = false;
@@ -297,15 +303,64 @@ function initContactForm() {
 
     if (!isValid) return;
 
-    // Simula envio acolhedor
-    submitBtn.disabled = true;
-    submitBtn.querySelector('.btn-text').textContent = 'Guardando suas palavras...';
+    // Dados dos demais campos
+    const locationVal = locationInput ? locationInput.value.trim() : '';
+    const dateVal = dateInput ? dateInput.value.trim() : '';
+    const storyVal = storyInput ? storyInput.value.trim() : '';
 
-    setTimeout(() => {
-      form.style.display = 'none';
-      successCard.style.display = 'block';
-      successCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }, 900);
+    let discoveryText = '';
+    if (discoverySelect && discoverySelect.selectedIndex > 0) {
+      discoveryText = discoverySelect.options[discoverySelect.selectedIndex].text;
+    }
+
+    // Montagem da mensagem formatada no modelo exato do formulário
+    const messageLines = [
+      'Olá, Rodrigo! Vim pelo site contar a nossa história:',
+      '',
+      '*Como devemos chamar vocês dois?*',
+      namesVal,
+      '',
+      '*O melhor e-mail de vocês:*',
+      emailVal,
+      '',
+      '*Onde sonham em celebrar?*',
+      locationVal || 'A definir / A combinar',
+      '',
+      '*Data prevista ou época do ano:*',
+      dateVal || 'A definir',
+      '',
+      '*O que faz o coração de vocês vibrar quando pensam nesse dia?*',
+      storyVal || 'Queremos contar todos os detalhes na nossa conversa!',
+      '',
+      '*Como o caminho de vocês encontrou o meu?*',
+      discoveryText || 'Pelo site / Outro acaso bonito'
+    ];
+
+    const messageText = messageLines.join('\n');
+    const whatsappNumber = '5561998685870';
+    const whatsappUrl = 'https://wa.me/' + whatsappNumber + '?text=' + encodeURIComponent(messageText);
+
+    // Feedback no botão de envio
+    submitBtn.disabled = true;
+    const btnText = submitBtn.querySelector('.btn-text');
+    if (btnText) btnText.textContent = 'Abrindo WhatsApp...';
+
+    // Configura o link de contingência no card de confirmação
+    const fallbackBtn = document.getElementById('whatsappFallbackBtn');
+    if (fallbackBtn) {
+      fallbackBtn.href = whatsappUrl;
+    }
+
+    // Exibe o card de confirmação
+    form.style.display = 'none';
+    successCard.style.display = 'block';
+    successCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    // Abre o WhatsApp diretamente
+    const openedWindow = window.open(whatsappUrl, '_blank');
+    if (!openedWindow || openedWindow.closed || typeof openedWindow.closed === 'undefined') {
+      window.location.href = whatsappUrl;
+    }
   });
 }
 
