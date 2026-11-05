@@ -1445,7 +1445,7 @@ button {
   width: 100%;
 }
 
-/* No desktop / PC: mantém exatamente como está (3 fotos na mesma fileira lado a lado) */
+/* No desktop / PC: 6 fotos dispostas em 3 colunas x 2 linhas */
 .highlights-grid {
   display: grid !important;
   grid-template-columns: repeat(3, 1fr) !important;
@@ -1468,7 +1468,15 @@ button {
   height: auto;
 }
 
-/* Controles do carrossel ocultos por padrão no PC */
+/* No tablet (769px a 992px): 2 colunas x 3 linhas */
+@media (max-width: 992px) and (min-width: 769px) {
+  .highlights-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1.5rem;
+  }
+}
+
+/* Controles do carrossel ocultos por padrão no PC e Tablet */
 .highlights-carousel-controls {
   display: none;
 }
