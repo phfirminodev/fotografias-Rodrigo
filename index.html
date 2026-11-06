@@ -296,14 +296,136 @@
           </p>
         </div>
 
+        <!-- Filtros da Seção Cinema -->
+        <div class="cinema-tabs-wrapper">
+          <div class="cinema-tabs" role="tablist" aria-label="Filtrar acervo cinematográfico">
+            <button class="cinema-tab-btn active" data-filter="all" role="tab" aria-selected="true">Todos os Filmes (7)</button>
+            <button class="cinema-tab-btn" data-filter="filmes" role="tab" aria-selected="false">Filmes Completos</button>
+            <button class="cinema-tab-btn" data-filter="highlights" role="tab" aria-selected="false">Highlights</button>
+            <button class="cinema-tab-btn" data-filter="teasers" role="tab" aria-selected="false">Teasers &amp; Vinhetas</button>
+          </div>
+        </div>
+
         <!-- Grid de Vídeos Cinematográficos Widescreen 16:9 (Hover Play com Áudio) -->
         <div class="cinema-grid">
-          <!-- Filme 1: Carol & Alex -->
-          <article class="cinema-card" tabindex="0" role="button" aria-label="Assistir ao filme de casamento de Carol e Alex em tela cheia">
+          <!-- 1. Carol & Alex: Filme Completo (4:41) -->
+          <article class="cinema-card" data-category="filmes" tabindex="0" role="button" aria-label="Assistir ao filme completo de casamento de Carol e Alex em tela cheia">
+            <div class="cinema-media-wrapper"
+                 data-video-src="assets/video/filme-carol-alex.mp4"
+                 data-video-title="Carol &amp; Alex — Filme Completo"
+                 data-video-subtitle="Casamento ao Ar Livre &bull; Entardecer Poético &bull; 4:41">
+              <video 
+                class="cinema-hover-video" 
+                src="assets/video/filme-carol-alex.mp4" 
+                poster="assets/video/poster-filme-carol-alex.jpg" 
+                loop 
+                playsinline 
+                preload="none"
+              ></video>
+              <div class="cinema-audio-badge" aria-hidden="true">
+                <svg class="audio-badge-icon" viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                  <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                </svg>
+                <span>Com Áudio</span>
+              </div>
+            </div>
+            <div class="cinema-info">
+              <span class="cinema-category">FILME DE CASAMENTO • 4:41</span>
+              <h3 class="cinema-title">Carol &amp; Alex</h3>
+              <p class="cinema-caption">A narrativa poética completa da celebração, desde os votos emocionados até a dança sob as luzes do entardecer.</p>
+            </div>
+          </article>
+
+          <!-- 2. Sabrina & Lucas: Filme Completo (2:48) -->
+          <article class="cinema-card" data-category="filmes" tabindex="0" role="button" aria-label="Assistir ao filme completo de casamento de Sabrina e Lucas em tela cheia">
+            <div class="cinema-media-wrapper"
+                 data-video-src="assets/video/filme-sabrina-lucas.mp4"
+                 data-video-title="Sabrina &amp; Lucas — Filme Completo"
+                 data-video-subtitle="Cerimônia &amp; Celebração &bull; A Força do Encontro &bull; 2:48">
+              <video 
+                class="cinema-hover-video" 
+                src="assets/video/filme-sabrina-lucas.mp4" 
+                poster="assets/video/poster-filme-sabrina-lucas.jpg" 
+                loop 
+                playsinline 
+                preload="none"
+              ></video>
+              <div class="cinema-audio-badge" aria-hidden="true">
+                <svg class="audio-badge-icon" viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                  <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                </svg>
+                <span>Com Áudio</span>
+              </div>
+            </div>
+            <div class="cinema-info">
+              <span class="cinema-category">FILME DE CASAMENTO • 2:48</span>
+              <h3 class="cinema-title">Sabrina &amp; Lucas</h3>
+              <p class="cinema-caption">A intensidade crua do amor, as lágrimas sinceras no altar e a verdade desarmada do abraço compartilhado.</p>
+            </div>
+          </article>
+
+          <!-- 3. Carol & Alex: Highlight Cinematográfico (2:24) -->
+          <article class="cinema-card" data-category="highlights" tabindex="0" role="button" aria-label="Assistir ao highlight de Carol e Alex em tela cheia">
+            <div class="cinema-media-wrapper"
+                 data-video-src="assets/video/highlight-carol-alex.mp4"
+                 data-video-title="Carol &amp; Alex — Highlight"
+                 data-video-subtitle="Highlight Cinematográfico &bull; Versão Especial &bull; 2:24">
+              <video 
+                class="cinema-hover-video" 
+                src="assets/video/highlight-carol-alex.mp4" 
+                poster="assets/video/poster-highlight-carol-alex.jpg" 
+                loop 
+                playsinline 
+                preload="none"
+              ></video>
+              <div class="cinema-audio-badge" aria-hidden="true">
+                <svg class="audio-badge-icon" viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                  <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                </svg>
+                <span>Com Áudio</span>
+              </div>
+            </div>
+            <div class="cinema-info">
+              <span class="cinema-category">HIGHLIGHT CINEMATOGRÁFICO • 2:24</span>
+              <h3 class="cinema-title">Carol &amp; Alex</h3>
+              <p class="cinema-caption">Uma seleção rítmica e sensorial dos momentos mais poéticos e inesquecíveis daquele grande dia.</p>
+            </div>
+          </article>
+
+          <!-- 4. Sabrina & Lucas: Highlight da Celebração (1:12) -->
+          <article class="cinema-card" data-category="highlights" tabindex="0" role="button" aria-label="Assistir ao highlight de Sabrina e Lucas em tela cheia">
+            <div class="cinema-media-wrapper"
+                 data-video-src="assets/video/highlight-sabrina-lucas.mp4"
+                 data-video-title="Sabrina &amp; Lucas — Highlight"
+                 data-video-subtitle="Highlight Cinematográfico &bull; A Vibração da Celebração &bull; 1:12">
+              <video 
+                class="cinema-hover-video" 
+                src="assets/video/highlight-sabrina-lucas.mp4" 
+                poster="assets/video/poster-highlight-sabrina-lucas.jpg" 
+                loop 
+                playsinline 
+                preload="none"
+              ></video>
+              <div class="cinema-audio-badge" aria-hidden="true">
+                <svg class="audio-badge-icon" viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                  <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                </svg>
+                <span>Com Áudio</span>
+              </div>
+            </div>
+            <div class="cinema-info">
+              <span class="cinema-category">HIGHLIGHT CINEMATOGRÁFICO • 1:12</span>
+              <h3 class="cinema-title">Sabrina &amp; Lucas</h3>
+              <p class="cinema-caption">O pulsar contagiante da comemoração, os risos desarmados e a euforia que transborda a cada instante.</p>
+            </div>
+          </article>
+
+          <!-- 5. Carol & Alex: Teaser Poético (0:40) -->
+          <article class="cinema-card" data-category="teasers" tabindex="0" role="button" aria-label="Assistir ao teaser de Carol e Alex em tela cheia">
             <div class="cinema-media-wrapper"
                  data-video-src="assets/video/teaser-carol-alex.mp4"
-                 data-video-title="Carol &amp; Alex"
-                 data-video-subtitle="Casamento ao Ar Livre &bull; Entardecer Poético">
+                 data-video-title="Carol &amp; Alex — Teaser"
+                 data-video-subtitle="Teaser Autoral &bull; Memórias em Movimento &bull; 0:40">
               <video 
                 class="cinema-hover-video" 
                 src="assets/video/teaser-carol-alex.mp4" 
@@ -320,18 +442,18 @@
               </div>
             </div>
             <div class="cinema-info">
-              <span class="cinema-category">FILME DE CASAMENTO</span>
+              <span class="cinema-category">TEASER AUTORAL • 0:40</span>
               <h3 class="cinema-title">Carol &amp; Alex</h3>
-              <p class="cinema-caption">A emoção solene da celebração ao ar livre e a poesia do entardecer.</p>
+              <p class="cinema-caption">A emoção solene da celebração ao ar livre e a poesia dos segundos que antecedem o sim.</p>
             </div>
           </article>
 
-          <!-- Filme 2: Sabrina & Lucas -->
-          <article class="cinema-card" tabindex="0" role="button" aria-label="Assistir ao filme de casamento de Sabrina e Lucas em tela cheia">
+          <!-- 6. Sabrina & Lucas: Teaser da Cerimônia (0:47) -->
+          <article class="cinema-card" data-category="teasers" tabindex="0" role="button" aria-label="Assistir ao teaser de Sabrina e Lucas em tela cheia">
             <div class="cinema-media-wrapper"
                  data-video-src="assets/video/teaser-sabrina-lucas.mp4"
-                 data-video-title="Sabrina &amp; Lucas"
-                 data-video-subtitle="Cerimônia &amp; Celebração &bull; A Força do Encontro">
+                 data-video-title="Sabrina &amp; Lucas — Teaser"
+                 data-video-subtitle="Teaser Autoral &bull; A Emoção do Altar &bull; 0:47">
               <video 
                 class="cinema-hover-video" 
                 src="assets/video/teaser-sabrina-lucas.mp4" 
@@ -348,9 +470,37 @@
               </div>
             </div>
             <div class="cinema-info">
-              <span class="cinema-category">FILME DE CASAMENTO</span>
+              <span class="cinema-category">TEASER AUTORAL • 0:47</span>
               <h3 class="cinema-title">Sabrina &amp; Lucas</h3>
-              <p class="cinema-caption">A intensidade do abraço no altar, os aplausos e a verdade crua do amor.</p>
+              <p class="cinema-caption">O instante do encontro, o respirar fundo e a verdade crua do amor diante de quem testemunha.</p>
+            </div>
+          </article>
+
+          <!-- 7. Carol & Alex: Vinheta Poética (0:08) -->
+          <article class="cinema-card" data-category="teasers" tabindex="0" role="button" aria-label="Assistir à vinheta poética de Carol e Alex em tela cheia">
+            <div class="cinema-media-wrapper"
+                 data-video-src="assets/video/vinheta-carol-alex.mp4"
+                 data-video-title="Carol &amp; Alex — Vinheta Poética"
+                 data-video-subtitle="Micro-Filme &bull; Fragmento de Luz &bull; 0:08">
+              <video 
+                class="cinema-hover-video" 
+                src="assets/video/vinheta-carol-alex.mp4" 
+                poster="assets/video/poster-vinheta-carol-alex.jpg" 
+                loop 
+                playsinline 
+                preload="none"
+              ></video>
+              <div class="cinema-audio-badge" aria-hidden="true">
+                <svg class="audio-badge-icon" viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                  <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                </svg>
+                <span>Com Áudio</span>
+              </div>
+            </div>
+            <div class="cinema-info">
+              <span class="cinema-category">VINHETA POÉTICA • 0:08</span>
+              <h3 class="cinema-title">Carol &amp; Alex</h3>
+              <p class="cinema-caption">Um fragmento fugaz de luz e movimento que condensa a magia daquele entardecer.</p>
             </div>
           </article>
         </div>

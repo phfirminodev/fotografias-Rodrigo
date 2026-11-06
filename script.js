@@ -443,6 +443,35 @@ function initCinemaSection() {
   window.addEventListener('keydown', unlockAudio, { passive: true });
   window.addEventListener('touchstart', unlockAudio, { passive: true });
 
+  // Filtros de Categoria da Seção Cinema
+  const cinemaTabs = document.querySelectorAll('.cinema-tab-btn');
+  cinemaTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      cinemaTabs.forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+
+      const filter = tab.getAttribute('data-filter');
+      cards.forEach(card => {
+        const cat = card.getAttribute('data-category') || '';
+        if (filter === 'all' || cat === filter) {
+          card.classList.remove('hide');
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(12px)';
+          setTimeout(() => {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+          }, 40);
+        } else {
+          card.classList.add('hide');
+        }
+      });
+    });
+  });
+
   // Configura cada card de vídeo da seção Cinema
   cards.forEach(card => {
     const wrapper = card.querySelector('.cinema-media-wrapper');
