@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 """
-Servidor HTTP local de desenvolvimento com suporte a HTTP Range (HTTP 206 Partial Content).
-Permite streaming fluido e instantâneo de vídeo MP4 no navegador.
+Servidor HTTP local de desenvolvimento com suporte completo a:
+- Dual-stack IPv4 e IPv6 (localhost, 127.0.0.1, ::1 e rede local)
+- HTTP Range Requests (HTTP 206 Partial Content) para vídeos MP4 fluidos
+- Threading para requisições concorrentes sem bloqueio
 """
 
 import functools
+import http.server
 import os
 import re
 import sys
@@ -13,6 +16,7 @@ from socketserver import ThreadingMixIn
 
 class ThreadingHTTPServer(ThreadingMixIn, HTTPServer):
     daemon_threads = True
+    allow_reuse_address = True
 
 class RangeRequestHandler(SimpleHTTPRequestHandler):
     def end_headers(self):
@@ -96,8 +100,13 @@ def main():
     port = int(sys.argv[1]) if len(sys.argv) > 1 else 8000
     directory = sys.argv[2] if len(sys.argv) > 2 else os.path.dirname(os.path.abspath(__file__))
     handler = functools.partial(RangeRequestHandler, directory=directory)
-    server = ThreadingHTTPServer(('127.0.0.1', port), handler)
-    print(f"Servidor HTTP com suporte a Range ativo em http://localhost:{port}/ (diretório: {directory})", flush=True)
+
+    # Usa o helper interno do Python para obter a melhor família de socket (dual-stack IPv4/IPv6 quando bind=None)
+    ServerClass = ThreadingHTTPServer
+    ServerClass.address_family, addr = http.server._get_best_family(None, port)
+    server = ServerClass(addr, handler)
+
+    print(f"Servidor HTTP ativo com suporte a Range em http://localhost:{port}/ e http://127.0.0.1:{port}/ (diretório: {directory})", flush=True)
     try:
         server.serve_forever()
     except KeyboardInterrupt:
