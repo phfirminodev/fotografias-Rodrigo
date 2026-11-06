@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """
-Servidor HTTP de desenvolvimento local com suporte completo a HTTP Range Requests (HTTP 206 Partial Content).
-Essencial para streaming fluido, busca e reprodução instantânea de vídeos MP4 no navegador.
+Servidor HTTP local de desenvolvimento com suporte a HTTP Range (HTTP 206 Partial Content).
+Permite streaming fluido e instantâneo de vídeo MP4 no navegador.
 """
 
+import functools
 import os
 import re
 import sys
@@ -91,13 +92,16 @@ class RangeRequestHandler(SimpleHTTPRequestHandler):
 
         return RangeFileWrapper(f, length)
 
-if __name__ == '__main__':
+def main():
     port = int(sys.argv[1]) if len(sys.argv) > 1 else 8000
     directory = sys.argv[2] if len(sys.argv) > 2 else os.path.dirname(os.path.abspath(__file__))
-    os.chdir(directory)
-    server = ThreadingHTTPServer(('0.0.0.0', port), RangeRequestHandler)
-    print(f"Servidor HTTP com suporte a Range ativo em http://localhost:{port}/ (diretório: {directory})")
+    handler = functools.partial(RangeRequestHandler, directory=directory)
+    server = ThreadingHTTPServer(('127.0.0.1', port), handler)
+    print(f"Servidor HTTP com suporte a Range ativo em http://localhost:{port}/ (diretório: {directory})", flush=True)
     try:
         server.serve_forever()
     except KeyboardInterrupt:
         pass
+
+if __name__ == '__main__':
+    main()
