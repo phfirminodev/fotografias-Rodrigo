@@ -296,26 +296,28 @@
           </p>
         </div>
 
-        <!-- Grid de Vídeos Cinematográficos Widescreen 16:9 (Hover Play) -->
+        <!-- Grid de Vídeos Cinematográficos Widescreen 16:9 (Hover Play com Áudio) -->
         <div class="cinema-grid">
           <!-- Filme 1: Carol & Alex -->
-          <article class="cinema-card">
+          <article class="cinema-card" tabindex="0" role="button" aria-label="Assistir ao filme de casamento de Carol e Alex em tela cheia">
             <div class="cinema-media-wrapper"
                  data-video-src="assets/video/teaser-carol-alex.mp4"
                  data-video-title="Carol &amp; Alex"
-                 data-video-subtitle="Casamento ao Ar Livre &bull; Entardecer Poético"
-                 tabindex="0"
-                 role="button"
-                 aria-label="Assistir ao filme de casamento de Carol e Alex em tela cheia">
+                 data-video-subtitle="Casamento ao Ar Livre &bull; Entardecer Poético">
               <video 
                 class="cinema-hover-video" 
                 src="assets/video/teaser-carol-alex.mp4" 
                 poster="assets/video/poster-carol-alex.jpg" 
-                muted 
                 loop 
                 playsinline 
-                preload="metadata"
+                preload="none"
               ></video>
+              <div class="cinema-audio-badge" aria-hidden="true">
+                <svg class="audio-badge-icon" viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                  <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                </svg>
+                <span>Com Áudio</span>
+              </div>
             </div>
             <div class="cinema-info">
               <span class="cinema-category">FILME DE CASAMENTO</span>
@@ -325,23 +327,25 @@
           </article>
 
           <!-- Filme 2: Sabrina & Lucas -->
-          <article class="cinema-card">
+          <article class="cinema-card" tabindex="0" role="button" aria-label="Assistir ao filme de casamento de Sabrina e Lucas em tela cheia">
             <div class="cinema-media-wrapper"
                  data-video-src="assets/video/teaser-sabrina-lucas.mp4"
                  data-video-title="Sabrina &amp; Lucas"
-                 data-video-subtitle="Cerimônia &amp; Celebração &bull; A Força do Encontro"
-                 tabindex="0"
-                 role="button"
-                 aria-label="Assistir ao filme de casamento de Sabrina e Lucas em tela cheia">
+                 data-video-subtitle="Cerimônia &amp; Celebração &bull; A Força do Encontro">
               <video 
                 class="cinema-hover-video" 
                 src="assets/video/teaser-sabrina-lucas.mp4" 
                 poster="assets/video/poster-sabrina-lucas.jpg" 
-                muted 
                 loop 
                 playsinline 
-                preload="metadata"
+                preload="none"
               ></video>
+              <div class="cinema-audio-badge" aria-hidden="true">
+                <svg class="audio-badge-icon" viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                  <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                </svg>
+                <span>Com Áudio</span>
+              </div>
             </div>
             <div class="cinema-info">
               <span class="cinema-category">FILME DE CASAMENTO</span>

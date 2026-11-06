@@ -420,7 +420,7 @@ function initHighlightsCarousel() {
 }
 
 /* ==========================================================================
-   SEÇÃO CINEMA & MODAL DE VÍDEO (HOVER PLAY & FULLSCREEN DIALOG)
+   SEÇÃO CINEMA & MODAL DE VÍDEO (HOVER PLAY COM ÁUDIO & FULLSCREEN DIALOG)
    ========================================================================== */
 function initCinemaSection() {
   const dialog = document.getElementById('videoDialog');
@@ -428,40 +428,71 @@ function initCinemaSection() {
   const videoPlayer = document.getElementById('mainVideoPlayer');
   const dialogTitle = document.getElementById('videoDialogTitle');
   const dialogSubtitle = document.getElementById('videoDialogSubtitle');
+  const cards = document.querySelectorAll('.cinema-card');
   const wrappers = document.querySelectorAll('.cinema-media-wrapper');
 
-  // Reprodução de vídeo sem som ao passar o mouse
-  wrappers.forEach(wrapper => {
-    const video = wrapper.querySelector('.cinema-hover-video');
-    if (!video) return;
+  // Estado global de interação do usuário para desbloquear áudio de mídia no navegador
+  let userInteracted = false;
+  const unlockAudio = () => {
+    userInteracted = true;
+    window.removeEventListener('click', unlockAudio);
+    window.removeEventListener('keydown', unlockAudio);
+    window.removeEventListener('touchstart', unlockAudio);
+  };
+  window.addEventListener('click', unlockAudio, { passive: true });
+  window.addEventListener('keydown', unlockAudio, { passive: true });
+  window.addEventListener('touchstart', unlockAudio, { passive: true });
 
-    wrapper.addEventListener('mouseenter', () => {
-      video.muted = true;
+  // Configura cada card de vídeo da seção Cinema
+  cards.forEach(card => {
+    const wrapper = card.querySelector('.cinema-media-wrapper');
+    const video = wrapper ? wrapper.querySelector('.cinema-hover-video') : null;
+    if (!wrapper || !video) return;
+
+    // Ao passar o mouse: reproduz com áudio
+    const playWithAudio = () => {
+      wrapper.classList.add('playing');
+      video.muted = false;
+      video.volume = 1.0;
       const playPromise = video.play();
       if (playPromise !== undefined) {
-        playPromise.catch(() => {});
+        playPromise.catch(() => {
+          // Se o navegador bloquear áudio antes da primeira interação do usuário, inicia mudo
+          if (!userInteracted) {
+            video.muted = true;
+            video.play().catch(() => {});
+          }
+        });
       }
-    });
+    };
 
-    wrapper.addEventListener('mouseleave', () => {
+    const stopVideo = () => {
+      wrapper.classList.remove('playing');
       video.pause();
       video.currentTime = 0;
-    });
+    };
 
-    // Ao clicar, abre o modal cinematográfico de tela cheia com áudio
+    card.addEventListener('mouseenter', playWithAudio);
+    card.addEventListener('mouseleave', stopVideo);
+
+    // Ao clicar em qualquer parte do card: abre o modal cinematográfico de tela cheia
     const triggerModal = (e) => {
       e.preventDefault();
+      userInteracted = true;
+      const startTime = video.currentTime || 0;
       video.pause();
+      wrapper.classList.remove('playing');
+
       const src = wrapper.getAttribute('data-video-src');
       const title = wrapper.getAttribute('data-video-title');
       const subtitle = wrapper.getAttribute('data-video-subtitle');
       if (src && dialog) {
-        openVideo(src, title, subtitle);
+        openVideo(src, title, subtitle, startTime);
       }
     };
 
-    wrapper.addEventListener('click', triggerModal);
-    wrapper.addEventListener('keydown', (e) => {
+    card.addEventListener('click', triggerModal);
+    card.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         triggerModal(e);
       }
@@ -474,23 +505,49 @@ function initCinemaSection() {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
+      userInteracted = true;
       const src = btn.getAttribute('data-video-src');
       const title = btn.getAttribute('data-video-title');
       const subtitle = btn.getAttribute('data-video-subtitle');
       if (src && dialog) {
-        openVideo(src, title, subtitle);
+        openVideo(src, title, subtitle, 0);
       }
     });
   });
 
-  const openVideo = (src, title, subtitle) => {
+  const openVideo = (src, title, subtitle, startTime = 0) => {
     if (!videoPlayer || !dialog) return;
-    videoPlayer.src = src;
+
+    // Atualiza a fonte e garante carregamento limpo
+    if (videoPlayer.getAttribute('src') !== src) {
+      videoPlayer.src = src;
+      videoPlayer.load();
+    }
+
+    videoPlayer.muted = false;
+    videoPlayer.volume = 1.0;
+
+    if (startTime > 0) {
+      try {
+        videoPlayer.currentTime = startTime;
+      } catch (err) {}
+    }
+
     if (dialogTitle) dialogTitle.textContent = title || '';
     if (dialogSubtitle) dialogSubtitle.innerHTML = subtitle || '';
-    dialog.showModal();
+
+    if (!dialog.open) {
+      dialog.showModal();
+    }
     document.body.style.overflow = 'hidden';
-    videoPlayer.play().catch(() => {});
+
+    // Inicia reprodução imediatamente com áudio
+    const playPromise = videoPlayer.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(err => {
+        console.warn('Reprodução do modal capturada:', err);
+      });
+    }
   };
 
   const closeVideo = () => {
@@ -498,15 +555,22 @@ function initCinemaSection() {
     videoPlayer.pause();
     videoPlayer.removeAttribute('src');
     videoPlayer.load();
-    dialog.close();
+    if (dialog.open) {
+      dialog.close();
+    }
     document.body.style.overflow = '';
   };
 
-  closeBtn?.addEventListener('click', closeVideo);
+  closeBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    closeVideo();
+  });
 
-  // Fechar ao clicar no backdrop escuro
+  // Fechar ao clicar no backdrop escuro (fora do player de vídeo)
   dialog?.addEventListener('click', (event) => {
-    if (event.target === dialog) {
+    const container = dialog.querySelector('.video-player-container');
+    const details = dialog.querySelector('.video-dialog-details');
+    if (container && !container.contains(event.target) && (!details || !details.contains(event.target))) {
       closeVideo();
     }
   });

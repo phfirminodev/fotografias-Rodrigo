@@ -1872,6 +1872,7 @@ button {
   display: flex;
   flex-direction: column;
   position: relative;
+  cursor: pointer;
 }
 
 .cinema-media-wrapper {
@@ -1897,10 +1898,49 @@ button {
   object-fit: cover;
   display: block;
   transition: transform 0.6s var(--transition-smooth);
+  pointer-events: none;
 }
 
 .cinema-card:hover .cinema-hover-video {
   transform: scale(1.03);
+}
+
+.cinema-audio-badge {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  background: rgba(18, 18, 18, 0.78);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #FAF8F5;
+  padding: 5px 11px;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-accent);
+  font-size: 0.64rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 5;
+}
+
+.cinema-card:hover .cinema-audio-badge,
+.cinema-media-wrapper.playing .cinema-audio-badge {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.audio-badge-icon {
+  width: 14px;
+  height: 14px;
+  color: var(--accent-terracotta);
+  flex-shrink: 0;
 }
 
 .cinema-info {
@@ -2010,6 +2050,20 @@ button {
   width: 100%;
   height: 100%;
   overflow: hidden;
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  z-index: 99999;
+}
+
+.video-dialog:not([open]) {
+  display: none !important;
+}
+
+.video-dialog[open] {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
 }
 
 .video-dialog::backdrop {
