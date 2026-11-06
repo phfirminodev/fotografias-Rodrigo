@@ -1,22 +1,30 @@
 #!/usr/bin/env python3
 """
 Servidor HTTP local de desenvolvimento com suporte completo a:
-- Dual-stack IPv4 e IPv6 (localhost, 127.0.0.1, ::1 e rede local)
+- Dual-stack IPv4 e IPv6 (localhost, 127.0.0.1, ::1 e IP da rede)
 - HTTP Range Requests (HTTP 206 Partial Content) para vídeos MP4 fluidos
 - Threading para requisições concorrentes sem bloqueio
 """
 
 import functools
-import http.server
 import os
 import re
+import socket
 import sys
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from socketserver import ThreadingMixIn
 
-class ThreadingHTTPServer(ThreadingMixIn, HTTPServer):
+class DualStackServer(ThreadingMixIn, HTTPServer):
     daemon_threads = True
     allow_reuse_address = True
+    address_family = socket.AF_INET6
+
+    def server_bind(self):
+        try:
+            self.socket.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_V6ONLY, 0)
+        except (AttributeError, OSError):
+            pass
+        super().server_bind()
 
 class RangeRequestHandler(SimpleHTTPRequestHandler):
     def end_headers(self):
@@ -101,10 +109,10 @@ def main():
     directory = sys.argv[2] if len(sys.argv) > 2 else os.path.dirname(os.path.abspath(__file__))
     handler = functools.partial(RangeRequestHandler, directory=directory)
 
-    # Usa o helper interno do Python para obter a melhor família de socket (dual-stack IPv4/IPv6 quando bind=None)
-    ServerClass = ThreadingHTTPServer
-    ServerClass.address_family, addr = http.server._get_best_family(None, port)
-    server = ServerClass(addr, handler)
+    try:
+        server = DualStackServer(('::', port), handler)
+    except OSError:
+        server = HTTPServer(('0.0.0.0', port), handler)
 
     print(f"Servidor HTTP ativo com suporte a Range em http://localhost:{port}/ e http://127.0.0.1:{port}/ (diretório: {directory})", flush=True)
     try:
