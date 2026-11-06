@@ -1850,3 +1850,365 @@ button {
     font-size: 1.15rem;
   }
 }
+
+/* ==========================================================================
+   17. SEÇÃO CINEMA & FILMES DE CASAMENTO (O CINEMA DO INVISÍVEL)
+   ========================================================================== */
+.cinema-section {
+  padding: clamp(5rem, 8vw, 9rem) 0;
+  background-color: var(--bg-canvas);
+  position: relative;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.cinema-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.75rem;
+  margin-top: 3.5rem;
+}
+
+.cinema-card {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.cinema-media-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--border-radius-sm);
+  overflow: hidden;
+  background-color: #121212;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+  cursor: pointer;
+}
+
+.cinema-card:hover .cinema-media-wrapper {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.16);
+}
+
+.cinema-poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s var(--transition-smooth);
+}
+
+.cinema-card:hover .cinema-poster {
+  transform: scale(1.04);
+}
+
+.cinema-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.45) 0%,
+    rgba(0, 0, 0, 0.1) 40%,
+    rgba(0, 0, 0, 0.65) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.5rem;
+  transition: background 0.3s ease;
+}
+
+.cinema-card:hover .cinema-overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.55) 0%,
+    rgba(0, 0, 0, 0.2) 40%,
+    rgba(0, 0, 0, 0.75) 100%
+  );
+}
+
+.cinema-badge-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.cinema-badge {
+  font-family: var(--font-accent);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.cinema-duration {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #FFFFFF;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.cinema-play-btn {
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(250, 248, 245, 0.94);
+  color: #2F2D2E;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 999px;
+  padding: 12px 24px;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s var(--transition-smooth);
+}
+
+.cinema-play-btn .play-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #2F2D2E;
+  color: #FFFFFF;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.cinema-play-btn .play-icon svg {
+  margin-left: 2px;
+}
+
+.cinema-play-btn .play-label {
+  font-family: var(--font-accent);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.cinema-card:hover .cinema-play-btn {
+  background: #FFFFFF;
+  transform: scale(1.06);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.cinema-card:hover .cinema-play-btn .play-icon {
+  background: var(--accent-terracotta);
+  transform: scale(1.1);
+}
+
+.cinema-info {
+  margin-top: 1.5rem;
+  text-align: left;
+}
+
+.cinema-category {
+  font-family: var(--font-accent);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent-terracotta);
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.cinema-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 2.2vw, 1.85rem);
+  color: var(--text-primary);
+  font-weight: 400;
+  margin: 0 0 0.4rem;
+}
+
+.cinema-caption {
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0;
+  font-weight: 300;
+}
+
+.cinema-cta {
+  text-align: center;
+  margin-top: 4rem;
+}
+
+.cinema-invitation {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 900px) {
+  .cinema-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}
+
+/* Botão de Filme na Galeria */
+.timeline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+
+.timeline-header-main {
+  flex: 1 1 320px;
+}
+
+.inline-film-btn {
+  padding: 10px 22px;
+  background: #FFFFFF;
+  border: 1px solid rgba(47, 45, 46, 0.15);
+  color: #2F2D2E;
+  font-size: 0.72rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.inline-film-btn:hover {
+  background: #2F2D2E;
+  color: #FFFFFF;
+  border-color: #2F2D2E;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.inline-film-btn .play-icon {
+  width: 28px;
+  height: 28px;
+}
+
+.inline-film-btn:hover .play-icon {
+  background: var(--accent-terracotta);
+  color: #FFFFFF;
+}
+
+/* ==========================================================================
+   VIDEO DIALOG LIGHTBOX
+   ========================================================================== */
+.video-dialog {
+  border: none;
+  background: transparent;
+  padding: 0;
+  max-width: 100vw;
+  max-height: 100vh;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.video-dialog::backdrop {
+  background: rgba(10, 10, 10, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  animation: fadeInBackdrop 0.4s ease forwards;
+}
+
+.video-dialog-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: clamp(1rem, 3vw, 2.5rem);
+  box-sizing: border-box;
+}
+
+.video-close-btn {
+  position: absolute;
+  top: clamp(1rem, 2.5vw, 2rem);
+  right: clamp(1rem, 2.5vw, 2rem);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #FFFFFF;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  font-size: 1.75rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 100;
+}
+
+.video-close-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.08);
+}
+
+.video-player-container {
+  width: 100%;
+  max-width: 1100px;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--border-radius-sm);
+  overflow: hidden;
+  background: #000000;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+}
+
+.cinema-active-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.video-dialog-details {
+  margin-top: 1.25rem;
+  text-align: center;
+  color: #FAF8F5;
+}
+
+.video-dialog-category {
+  font-family: var(--font-accent);
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent-terracotta);
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.video-dialog-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.4rem, 2.5vw, 1.85rem);
+  font-weight: 400;
+  margin: 0 0 0.25rem;
+}
+
+.video-dialog-subtitle {
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  color: #B5B1A5;
+  font-weight: 300;
+  margin: 0;
+}
+

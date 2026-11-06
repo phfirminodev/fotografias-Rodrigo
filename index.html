@@ -28,6 +28,7 @@
       <nav class="nav-desktop" aria-label="Navegação Principal">
         <ul class="nav-list">
           <li><a href="#historias" class="nav-link">Histórias</a></li>
+          <li><a href="#cinema" class="nav-link">Cinema</a></li>
           <li><a href="#sobre" class="nav-link">Sobre Mim</a></li>
           <li><a href="#experiencia" class="nav-link">A Experiência</a></li>
         </ul>
@@ -54,6 +55,7 @@
           <li><a href="#manifesto" class="mobile-nav-link">Manifesto</a></li>
           <li><a href="#sobre" class="mobile-nav-link">Sobre Mim</a></li>
           <li><a href="#historias" class="mobile-nav-link">Histórias & Galeria</a></li>
+          <li><a href="#cinema" class="mobile-nav-link">Cinema & Filmes</a></li>
           <li><a href="#depoimentos" class="mobile-nav-link">Ecos de Afeto</a></li>
           <li><a href="#experiencia" class="mobile-nav-link">A Experiência</a></li>
           <li><a href="#diario" class="mobile-nav-link">Diário & Crônicas</a></li>
@@ -278,6 +280,101 @@
           <p class="gallery-invitation">Cada celebração é única e merece um álbum que seja uma obra de arte.</p>
           <a href="galeria.html" class="btn btn-outline">
             Conheça mais nosso trabalho <span class="arrow" aria-hidden="true" style="margin-left: 8px;">→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO CINEMA / FILMES DE CASAMENTO (MEMÓRIAS EM MOVIMENTO) -->
+    <section class="cinema-section" id="cinema">
+      <div class="container">
+        <div class="section-header-center">
+          <p class="section-tagline">MEMÓRIAS EM MOVIMENTO</p>
+          <h2 class="section-heading">O Cinema do Invisível</h2>
+          <p class="section-description">
+            O ritmo do tempo, os sussurros e o pulsar dos instantes que não cabem apenas na imagem estática. Filmes de casamento com narrativa poética e cinematografia autoral.
+          </p>
+        </div>
+
+        <!-- Grid de Vídeos Cinematográficos Widescreen 16:9 -->
+        <div class="cinema-grid">
+          <!-- Filme 1: Carol & Alex -->
+          <article class="cinema-card">
+            <div class="cinema-media-wrapper">
+              <img 
+                src="assets/video/poster-carol-alex.jpg" 
+                alt="Teaser do Casamento de Carol e Alex por Rodrigo Zago" 
+                class="cinema-poster"
+                loading="lazy"
+                decoding="async"
+              >
+              <div class="cinema-overlay">
+                <div class="cinema-badge-top">
+                  <span class="cinema-badge">CINEMA &bull; 4K</span>
+                  <span class="cinema-duration">0:40</span>
+                </div>
+                <button 
+                  class="cinema-play-btn" 
+                  aria-label="Assistir ao filme de casamento de Carol e Alex"
+                  data-video-src="assets/video/teaser-carol-alex.mp4"
+                  data-video-title="Carol & Alex"
+                  data-video-subtitle="Casamento ao Ar Livre &bull; Entardecer Poético"
+                >
+                  <span class="play-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                  </span>
+                  <span class="play-label">Assistir Filme</span>
+                </button>
+              </div>
+            </div>
+            <div class="cinema-info">
+              <span class="cinema-category">FILME DE CASAMENTO</span>
+              <h3 class="cinema-title">Carol & Alex</h3>
+              <p class="cinema-caption">A emoção solene da celebração ao ar livre e a poesia do entardecer.</p>
+            </div>
+          </article>
+
+          <!-- Filme 2: Sabrina & Lucas -->
+          <article class="cinema-card">
+            <div class="cinema-media-wrapper">
+              <img 
+                src="assets/video/poster-sabrina-lucas.jpg" 
+                alt="Teaser do Casamento de Sabrina e Lucas por Rodrigo Zago" 
+                class="cinema-poster"
+                loading="lazy"
+                decoding="async"
+              >
+              <div class="cinema-overlay">
+                <div class="cinema-badge-top">
+                  <span class="cinema-badge">CINEMA &bull; 4K</span>
+                  <span class="cinema-duration">0:47</span>
+                </div>
+                <button 
+                  class="cinema-play-btn" 
+                  aria-label="Assistir ao filme de casamento de Sabrina e Lucas"
+                  data-video-src="assets/video/teaser-sabrina-lucas.mp4"
+                  data-video-title="Sabrina & Lucas"
+                  data-video-subtitle="Cerimônia & Celebração &bull; A Força do Encontro"
+                >
+                  <span class="play-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                  </span>
+                  <span class="play-label">Assistir Filme</span>
+                </button>
+              </div>
+            </div>
+            <div class="cinema-info">
+              <span class="cinema-category">FILME DE CASAMENTO</span>
+              <h3 class="cinema-title">Sabrina & Lucas</h3>
+              <p class="cinema-caption">A intensidade do abraço no altar, os aplausos e a verdade crua do amor.</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="cinema-cta">
+          <p class="cinema-invitation">Cada história de amor possui uma trilha sonora única e um ritmo próprio.</p>
+          <a href="#contato" class="btn btn-outline">
+            Planejar o filme do nosso dia <span class="arrow" aria-hidden="true" style="margin-left: 8px;">→</span>
           </a>
         </div>
       </div>
@@ -525,6 +622,7 @@
           <li><a href="#manifesto">Manifesto</a></li>
           <li><a href="#sobre">Sobre Mim</a></li>
           <li><a href="#historias">Galeria de Histórias</a></li>
+          <li><a href="#cinema">Cinema & Filmes</a></li>
           <li><a href="#depoimentos">Ecos de Afeto</a></li>
           <li><a href="#experiencia">A Experiência</a></li>
           <li><a href="#diario">Diário</a></li>
@@ -547,6 +645,29 @@
       </div>
     </div>
   </footer>
+
+  <!-- MODAL DIALOG PARA VÍDEOS CINEMATOGRÁFICOS -->
+  <dialog class="video-dialog" id="videoDialog" aria-labelledby="videoDialogTitle">
+    <div class="video-dialog-inner">
+      <button class="video-close-btn" id="videoDialogClose" aria-label="Fechar vídeo">×</button>
+      
+      <div class="video-player-container">
+        <video 
+          id="mainVideoPlayer" 
+          controls 
+          playsinline 
+          preload="metadata"
+          class="cinema-active-video"
+        ></video>
+      </div>
+
+      <div class="video-dialog-details">
+        <span class="video-dialog-category" id="videoDialogCategory">CINEMA AUTORAL</span>
+        <h3 class="video-dialog-title" id="videoDialogTitle"></h3>
+        <p class="video-dialog-subtitle" id="videoDialogSubtitle"></p>
+      </div>
+    </div>
+  </dialog>
 
   <!-- NATIVE LIGHTBOX MODAL DIALOG (MODERN WEB GUIDANCE) -->
   <dialog class="lightbox-dialog" id="lightboxDialog" aria-labelledby="dialogTitle">
