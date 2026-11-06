@@ -296,76 +296,56 @@
           </p>
         </div>
 
-        <!-- Grid de Vídeos Cinematográficos Widescreen 16:9 -->
+        <!-- Grid de Vídeos Cinematográficos Widescreen 16:9 (Hover Play) -->
         <div class="cinema-grid">
           <!-- Filme 1: Carol & Alex -->
           <article class="cinema-card">
-            <div class="cinema-media-wrapper">
-              <img 
-                src="assets/video/poster-carol-alex.jpg" 
-                alt="Teaser do Casamento de Carol e Alex por Rodrigo Zago" 
-                class="cinema-poster"
-                loading="lazy"
-                decoding="async"
-              >
-              <div class="cinema-overlay">
-                <div class="cinema-badge-top">
-                  <span class="cinema-badge">CINEMA &bull; 4K</span>
-                  <span class="cinema-duration">0:40</span>
-                </div>
-                <button 
-                  class="cinema-play-btn" 
-                  aria-label="Assistir ao filme de casamento de Carol e Alex"
-                  data-video-src="assets/video/teaser-carol-alex.mp4"
-                  data-video-title="Carol & Alex"
-                  data-video-subtitle="Casamento ao Ar Livre &bull; Entardecer Poético"
-                >
-                  <span class="play-icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-                  </span>
-                  <span class="play-label">Assistir Filme</span>
-                </button>
-              </div>
+            <div class="cinema-media-wrapper"
+                 data-video-src="assets/video/teaser-carol-alex.mp4"
+                 data-video-title="Carol &amp; Alex"
+                 data-video-subtitle="Casamento ao Ar Livre &bull; Entardecer Poético"
+                 tabindex="0"
+                 role="button"
+                 aria-label="Assistir ao filme de casamento de Carol e Alex em tela cheia">
+              <video 
+                class="cinema-hover-video" 
+                src="assets/video/teaser-carol-alex.mp4" 
+                poster="assets/video/poster-carol-alex.jpg" 
+                muted 
+                loop 
+                playsinline 
+                preload="metadata"
+              ></video>
             </div>
             <div class="cinema-info">
               <span class="cinema-category">FILME DE CASAMENTO</span>
-              <h3 class="cinema-title">Carol & Alex</h3>
+              <h3 class="cinema-title">Carol &amp; Alex</h3>
               <p class="cinema-caption">A emoção solene da celebração ao ar livre e a poesia do entardecer.</p>
             </div>
           </article>
 
           <!-- Filme 2: Sabrina & Lucas -->
           <article class="cinema-card">
-            <div class="cinema-media-wrapper">
-              <img 
-                src="assets/video/poster-sabrina-lucas.jpg" 
-                alt="Teaser do Casamento de Sabrina e Lucas por Rodrigo Zago" 
-                class="cinema-poster"
-                loading="lazy"
-                decoding="async"
-              >
-              <div class="cinema-overlay">
-                <div class="cinema-badge-top">
-                  <span class="cinema-badge">CINEMA &bull; 4K</span>
-                  <span class="cinema-duration">0:47</span>
-                </div>
-                <button 
-                  class="cinema-play-btn" 
-                  aria-label="Assistir ao filme de casamento de Sabrina e Lucas"
-                  data-video-src="assets/video/teaser-sabrina-lucas.mp4"
-                  data-video-title="Sabrina & Lucas"
-                  data-video-subtitle="Cerimônia & Celebração &bull; A Força do Encontro"
-                >
-                  <span class="play-icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-                  </span>
-                  <span class="play-label">Assistir Filme</span>
-                </button>
-              </div>
+            <div class="cinema-media-wrapper"
+                 data-video-src="assets/video/teaser-sabrina-lucas.mp4"
+                 data-video-title="Sabrina &amp; Lucas"
+                 data-video-subtitle="Cerimônia &amp; Celebração &bull; A Força do Encontro"
+                 tabindex="0"
+                 role="button"
+                 aria-label="Assistir ao filme de casamento de Sabrina e Lucas em tela cheia">
+              <video 
+                class="cinema-hover-video" 
+                src="assets/video/teaser-sabrina-lucas.mp4" 
+                poster="assets/video/poster-sabrina-lucas.jpg" 
+                muted 
+                loop 
+                playsinline 
+                preload="metadata"
+              ></video>
             </div>
             <div class="cinema-info">
               <span class="cinema-category">FILME DE CASAMENTO</span>
-              <h3 class="cinema-title">Sabrina & Lucas</h3>
+              <h3 class="cinema-title">Sabrina &amp; Lucas</h3>
               <p class="cinema-caption">A intensidade do abraço no altar, os aplausos e a verdade crua do amor.</p>
             </div>
           </article>

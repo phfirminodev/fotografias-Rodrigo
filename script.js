@@ -420,7 +420,7 @@ function initHighlightsCarousel() {
 }
 
 /* ==========================================================================
-   SEÇÃO CINEMA & MODAL DE VÍDEO
+   SEÇÃO CINEMA & MODAL DE VÍDEO (HOVER PLAY & FULLSCREEN DIALOG)
    ========================================================================== */
 function initCinemaSection() {
   const dialog = document.getElementById('videoDialog');
@@ -428,11 +428,63 @@ function initCinemaSection() {
   const videoPlayer = document.getElementById('mainVideoPlayer');
   const dialogTitle = document.getElementById('videoDialogTitle');
   const dialogSubtitle = document.getElementById('videoDialogSubtitle');
-  const playButtons = document.querySelectorAll('.cinema-play-btn');
+  const wrappers = document.querySelectorAll('.cinema-media-wrapper');
 
-  if (!dialog || !videoPlayer || !playButtons.length) return;
+  // Reprodução de vídeo sem som ao passar o mouse
+  wrappers.forEach(wrapper => {
+    const video = wrapper.querySelector('.cinema-hover-video');
+    if (!video) return;
+
+    wrapper.addEventListener('mouseenter', () => {
+      video.muted = true;
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {});
+      }
+    });
+
+    wrapper.addEventListener('mouseleave', () => {
+      video.pause();
+      video.currentTime = 0;
+    });
+
+    // Ao clicar, abre o modal cinematográfico de tela cheia com áudio
+    const triggerModal = (e) => {
+      e.preventDefault();
+      video.pause();
+      const src = wrapper.getAttribute('data-video-src');
+      const title = wrapper.getAttribute('data-video-title');
+      const subtitle = wrapper.getAttribute('data-video-subtitle');
+      if (src && dialog) {
+        openVideo(src, title, subtitle);
+      }
+    };
+
+    wrapper.addEventListener('click', triggerModal);
+    wrapper.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        triggerModal(e);
+      }
+    });
+  });
+
+  // Suporte a botões de filme na Galeria (.inline-film-btn)
+  const inlineButtons = document.querySelectorAll('.inline-film-btn');
+  inlineButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const src = btn.getAttribute('data-video-src');
+      const title = btn.getAttribute('data-video-title');
+      const subtitle = btn.getAttribute('data-video-subtitle');
+      if (src && dialog) {
+        openVideo(src, title, subtitle);
+      }
+    });
+  });
 
   const openVideo = (src, title, subtitle) => {
+    if (!videoPlayer || !dialog) return;
     videoPlayer.src = src;
     if (dialogTitle) dialogTitle.textContent = title || '';
     if (dialogSubtitle) dialogSubtitle.innerHTML = subtitle || '';
@@ -442,6 +494,7 @@ function initCinemaSection() {
   };
 
   const closeVideo = () => {
+    if (!videoPlayer || !dialog) return;
     videoPlayer.pause();
     videoPlayer.removeAttribute('src');
     videoPlayer.load();
@@ -449,41 +502,22 @@ function initCinemaSection() {
     document.body.style.overflow = '';
   };
 
-  playButtons.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      const src = btn.getAttribute('data-video-src');
-      const title = btn.getAttribute('data-video-title');
-      const subtitle = btn.getAttribute('data-video-subtitle');
-      if (src) {
-        openVideo(src, title, subtitle);
-      }
-    });
-  });
-
-  // Clicar em qualquer parte do card do vídeo também ativa a reprodução
-  document.querySelectorAll('.cinema-media-wrapper').forEach(wrapper => {
-    wrapper.addEventListener('click', () => {
-      const btn = wrapper.querySelector('.cinema-play-btn');
-      btn?.click();
-    });
-  });
-
   closeBtn?.addEventListener('click', closeVideo);
 
   // Fechar ao clicar no backdrop escuro
-  dialog.addEventListener('click', (event) => {
+  dialog?.addEventListener('click', (event) => {
     if (event.target === dialog) {
       closeVideo();
     }
   });
 
-  // Tecla ESC ou cancel nativo
-  dialog.addEventListener('cancel', () => {
-    videoPlayer.pause();
-    videoPlayer.removeAttribute('src');
-    videoPlayer.load();
+  // Fechar com a tecla ESC
+  dialog?.addEventListener('cancel', () => {
+    if (videoPlayer) {
+      videoPlayer.pause();
+      videoPlayer.removeAttribute('src');
+      videoPlayer.load();
+    }
     document.body.style.overflow = '';
   });
 }
