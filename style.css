@@ -1940,6 +1940,15 @@ button {
   color: #FFFFFF;
 }
 
+.cinema-carousel-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.cinema-carousel-controls {
+  display: none;
+}
+
 .cinema-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -2072,10 +2081,83 @@ button {
   margin-bottom: 1.5rem;
 }
 
-@media (max-width: 900px) {
+/* No tablet (769px a 900px): 1 coluna vertical com espaçamento elegante */
+@media (max-width: 900px) and (min-width: 769px) {
   .cinema-grid {
     grid-template-columns: 1fr;
     gap: 3rem;
+  }
+}
+
+/* No celular / mobile (<= 768px): carrossel horizontal imersivo com scroll-snap */
+@media (max-width: 768px) {
+  .cinema-carousel-wrapper {
+    position: relative;
+    width: 100% !important;
+    margin-top: 2rem;
+    overflow: hidden;
+  }
+
+  .cinema-grid {
+    display: flex !important;
+    width: 100% !important;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    gap: 1.25rem;
+    margin: 0 !important;
+    padding: 0.5rem 0 1rem 0 !important;
+    scrollbar-width: none;
+  }
+
+  .cinema-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .cinema-grid .cinema-card {
+    flex: 0 0 100% !important;
+    min-width: 100% !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+    box-sizing: border-box;
+  }
+
+  .cinema-grid .cinema-card.hide {
+    display: none !important;
+  }
+
+  .cinema-grid .cinema-media-wrapper {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--border-radius-sm);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+  }
+
+  .cinema-grid .cinema-info {
+    margin-top: 1.25rem;
+    padding: 0 0.25rem;
+  }
+
+  .cinema-grid .cinema-title {
+    font-size: 1.6rem;
+  }
+
+  .cinema-grid .cinema-caption {
+    font-size: 0.88rem;
+    line-height: 1.55;
+  }
+
+  /* Exibe controles de navegação do carrossel no celular */
+  .cinema-carousel-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    width: 100%;
   }
 }
 

@@ -305,8 +305,9 @@
           </div>
         </div>
 
-        <!-- Grid de Vídeos Cinematográficos Widescreen 16:9 (Hover Play com Áudio) -->
-        <div class="cinema-grid">
+        <!-- Carrossel / Grid de Vídeos Cinematográficos Widescreen 16:9 -->
+        <div class="cinema-carousel-wrapper">
+          <div class="cinema-grid" id="cinemaGrid">
           <!-- 1. Carol & Alex: Filme Completo (4:41) -->
           <article class="cinema-card" data-category="filmes" tabindex="0" role="button" aria-label="Assistir ao filme completo de casamento de Carol e Alex em tela cheia">
             <div class="cinema-media-wrapper"
@@ -419,6 +420,19 @@
             </div>
           </article>
         </div>
+
+        <!-- Controles de Navegação do Carrossel Mobile -->
+        <div class="cinema-carousel-controls" aria-label="Navegação dos filmes">
+          <button class="carousel-nav-btn prev" id="cinemaPrev" aria-label="Vídeo anterior">‹</button>
+          <div class="carousel-dots" id="cinemaDots" role="tablist" aria-label="Indicadores dos vídeos">
+            <button class="carousel-dot active" data-slide="0" aria-label="Vídeo 1 de 4"></button>
+            <button class="carousel-dot" data-slide="1" aria-label="Vídeo 2 de 4"></button>
+            <button class="carousel-dot" data-slide="2" aria-label="Vídeo 3 de 4"></button>
+            <button class="carousel-dot" data-slide="3" aria-label="Vídeo 4 de 4"></button>
+          </div>
+          <button class="carousel-nav-btn next" id="cinemaNext" aria-label="Próximo vídeo">›</button>
+        </div>
+      </div>
 
         <div class="cinema-cta">
           <p class="cinema-invitation">Cada história de amor possui uma trilha sonora única e um ritmo próprio.</p>

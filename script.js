@@ -470,8 +470,107 @@ function initCinemaSection() {
           card.classList.add('hide');
         }
       });
+
+      // Atualiza os indicadores do carrossel mobile ao filtrar
+      setTimeout(() => {
+        renderDots();
+        if (track) track.scrollTo({ left: 0, behavior: 'smooth' });
+      }, 50);
     });
   });
+
+  // Rastreamento de toque para não disparar abertura de modal durante o deslize (swipe)
+  const track = document.getElementById('cinemaGrid');
+  let isSwiping = false;
+  let touchStartX = 0;
+  let touchStartY = 0;
+
+  if (track) {
+    track.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        isSwiping = false;
+      }
+    }, { passive: true });
+
+    track.addEventListener('touchmove', (e) => {
+      if (e.touches.length === 1) {
+        const dx = Math.abs(e.touches[0].clientX - touchStartX);
+        const dy = Math.abs(e.touches[0].clientY - touchStartY);
+        if (dx > 8 || dy > 8) {
+          isSwiping = true;
+        }
+      }
+    }, { passive: true });
+  }
+
+  // Controles do Carrossel Mobile de Vídeos (Setas e Dots)
+  const dotsContainer = document.getElementById('cinemaDots');
+  const prevBtn = document.getElementById('cinemaPrev');
+  const nextBtn = document.getElementById('cinemaNext');
+
+  const getVisibleCards = () => {
+    if (!track) return [];
+    return Array.from(track.querySelectorAll('.cinema-card')).filter(c => !c.classList.contains('hide'));
+  };
+
+  const getStep = () => {
+    const visible = getVisibleCards();
+    if (visible.length > 1) {
+      return visible[1].offsetLeft - visible[0].offsetLeft;
+    }
+    return visible[0] ? (visible[0].offsetWidth || track.clientWidth) : track.clientWidth;
+  };
+
+  const renderDots = () => {
+    if (!dotsContainer) return;
+    const visible = getVisibleCards();
+    dotsContainer.innerHTML = '';
+    visible.forEach((card, idx) => {
+      const dot = document.createElement('button');
+      dot.className = 'carousel-dot' + (idx === 0 ? ' active' : '');
+      dot.setAttribute('data-slide', idx);
+      dot.setAttribute('aria-label', `Vídeo ${idx + 1} de ${visible.length}`);
+      dot.addEventListener('click', () => {
+        card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      });
+      dotsContainer.appendChild(dot);
+    });
+  };
+
+  const updateActiveDot = () => {
+    if (!dotsContainer || !track) return;
+    const visible = getVisibleCards();
+    if (!visible.length) return;
+    const step = getStep();
+    if (!step) return;
+    const scrollLeft = track.scrollLeft;
+    const activeIndex = Math.min(Math.max(0, Math.round(scrollLeft / step)), visible.length - 1);
+
+    const dots = dotsContainer.querySelectorAll('.carousel-dot');
+    dots.forEach((dot, idx) => {
+      dot.classList.toggle('active', idx === activeIndex);
+    });
+  };
+
+  if (track) {
+    track.addEventListener('scroll', updateActiveDot, { passive: true });
+  }
+
+  prevBtn?.addEventListener('click', () => {
+    if (!track) return;
+    const step = getStep();
+    track.scrollBy({ left: -step, behavior: 'smooth' });
+  });
+
+  nextBtn?.addEventListener('click', () => {
+    if (!track) return;
+    const step = getStep();
+    track.scrollBy({ left: step, behavior: 'smooth' });
+  });
+
+  renderDots();
 
   // Configura cada card de vídeo da seção Cinema
   cards.forEach(card => {
@@ -479,7 +578,7 @@ function initCinemaSection() {
     const video = wrapper ? wrapper.querySelector('.cinema-hover-video') : null;
     if (!wrapper || !video) return;
 
-    // Ao passar o mouse: reproduz com áudio
+    // Ao passar o mouse: reproduz com áudio (desktop)
     const playWithAudio = () => {
       wrapper.classList.add('playing');
       video.muted = false;
@@ -507,6 +606,7 @@ function initCinemaSection() {
 
     // Ao clicar em qualquer parte do card: abre o modal cinematográfico de tela cheia
     const triggerModal = (e) => {
+      if (isSwiping) return; // Não abre modal se o usuário estiver apenas deslizando o carrossel no celular
       e.preventDefault();
       userInteracted = true;
       const startTime = video.currentTime || 0;
