@@ -1270,19 +1270,57 @@ button {
 
 .dialog-close-btn {
   position: absolute;
-  top: -45px;
+  top: -48px;
   right: 0;
-  color: #FFFFFF;
-  font-size: 1.5rem;
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(22, 22, 22, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: rgba(255, 255, 255, 0.95);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.2s ease;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, color 0.25s ease;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
+  z-index: 100;
 }
+
 .dialog-close-btn:hover {
-  opacity: 0.7;
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #FFFFFF;
+  transform: scale(1.08) rotate(90deg);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6);
+}
+
+.dialog-close-btn:active {
+  transform: scale(0.94);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.dialog-close-btn:focus {
+  outline: none;
+}
+
+.dialog-close-btn:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.7);
+  outline-offset: 3px;
+}
+
+.dialog-close-btn svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  display: block;
+  pointer-events: none;
+  transition: stroke 0.2s ease;
 }
 
 .dialog-media-container {
@@ -2145,27 +2183,57 @@ button {
 
 .video-close-btn {
   position: absolute;
-  top: clamp(1rem, 2.5vw, 2rem);
-  right: clamp(1rem, 2.5vw, 2rem);
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #FFFFFF;
-  width: 44px;
-  height: 44px;
+  top: clamp(1.25rem, 3vw, 2.5rem);
+  right: clamp(1.25rem, 3vw, 2.5rem);
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
-  font-size: 1.75rem;
-  line-height: 1;
+  background: rgba(22, 22, 22, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: rgba(255, 255, 255, 0.95);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.2s ease;
+  padding: 0;
+  margin: 0;
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, color 0.25s ease;
   z-index: 100;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
 }
 
 .video-close-btn:hover {
-  background: rgba(255, 255, 255, 0.25);
-  transform: scale(1.08);
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #FFFFFF;
+  transform: scale(1.08) rotate(90deg);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6);
+}
+
+.video-close-btn:active {
+  transform: scale(0.94);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.video-close-btn:focus {
+  outline: none;
+}
+
+.video-close-btn:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.7);
+  outline-offset: 3px;
+}
+
+.video-close-btn svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  display: block;
+  pointer-events: none;
+  transition: stroke 0.2s ease;
 }
 
 .video-player-container {

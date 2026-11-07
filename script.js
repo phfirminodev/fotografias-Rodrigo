@@ -170,6 +170,7 @@ function initLightboxDialog() {
         loadPhoto(idx >= 0 ? idx : 0);
         dialog.showModal();
         document.body.style.overflow = 'hidden';
+        if (closeBtn) closeBtn.blur();
       });
     }
   });
@@ -569,6 +570,12 @@ function initCinemaSection() {
       dialog.showModal();
     }
     document.body.style.overflow = 'hidden';
+    if (closeBtn) closeBtn.blur();
+    if (videoPlayer) {
+      try {
+        videoPlayer.focus({ preventScroll: true });
+      } catch (err) {}
+    }
 
     // Inicia reprodução imediatamente com áudio
     const playPromise = videoPlayer.play();
