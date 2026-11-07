@@ -532,52 +532,65 @@
           <a href="#contato" class="btn btn-outline desktop-only">Ver Todas as Crônicas</a>
         </div>
 
-        <div class="journal-grid">
-          <article class="journal-card">
-            <a href="#contato" class="journal-card-link">
-              <div class="journal-img-wrapper">
-                <img 
-                  src="assets/portfolio/aniversario-fashion/a7r01749.jpg" 
-                  alt="Noiva caminhando descalça entre a vegetação suave" 
-                  loading="lazy" 
-                  decoding="async"
-                >
-              </div>
-              <div class="journal-meta">
-                <span class="journal-tag">Ensaio Intimista</span>
-                <span class="dot-divider">•</span>
-                <time datetime="2024-09-12">Setembro de 2024</time>
-              </div>
-              <h3 class="journal-title">Por que escolhemos a luz natural e o grão analógico</h3>
-              <p class="journal-excerpt">
-                A perfeição digital muitas vezes apaga a pulsação do instante. Uma reflexão sobre a poesia da imperfeição em tempos de filtros imediatos.
-              </p>
-              <span class="read-more">Ler Crônica <span aria-hidden="true">→</span></span>
-            </a>
-          </article>
+        <!-- Carrossel / Grid de Crônicas e Ensaios -->
+        <div class="journal-carousel-wrapper">
+          <div class="journal-grid" id="journalGrid">
+            <article class="journal-card" data-article="grao-analogico">
+              <a href="cronica-luz-natural-grao-analogico.html" class="journal-card-link open-journal-modal" data-article="grao-analogico">
+                <div class="journal-img-wrapper">
+                  <img 
+                    src="assets/portfolio/aniversario-fashion/a7r01749.jpg" 
+                    alt="Noiva caminhando descalça entre a vegetação suave" 
+                    loading="lazy" 
+                    decoding="async"
+                  >
+                </div>
+                <div class="journal-meta">
+                  <span class="journal-tag">Ensaio Intimista</span>
+                  <span class="dot-divider">•</span>
+                  <time datetime="2024-09-12">Setembro de 2024</time>
+                </div>
+                <h3 class="journal-title">Por que escolhemos a luz natural e o grão analógico</h3>
+                <p class="journal-excerpt">
+                  A perfeição digital muitas vezes apaga a pulsação do instante. Uma reflexão sobre a poesia da imperfeição em tempos de filtros imediatos.
+                </p>
+                <span class="read-more">Ler Crônica <span aria-hidden="true">→</span></span>
+              </a>
+            </article>
 
-          <article class="journal-card">
-            <a href="#contato" class="journal-card-link">
-              <div class="journal-img-wrapper">
-                <img 
-                  src="assets/portfolio/carol-e-alex/carolealex-291.jpg" 
-                  alt="Casal abraçado ao pôr do sol" 
-                  loading="lazy" 
-                  decoding="async"
-                >
-              </div>
-              <div class="journal-meta">
-                <span class="journal-tag">História Completa</span>
-                <span class="dot-divider">•</span>
-                <time datetime="2024-08-20">Agosto de 2024</time>
-              </div>
-              <h3 class="journal-title">A celebração autêntica de Carol & Alex</h3>
-              <p class="journal-excerpt">
-                Luz dourada, risos descalços e a promessa de nunca deixar a rotina apagar a ternura e a verdade de cada olhar.
-              </p>
-              <span class="read-more">Ler Crônica <span aria-hidden="true">→</span></span>
-            </a>
-          </article>
+            <article class="journal-card" data-article="carol-alex">
+              <a href="cronica-carol-e-alex.html" class="journal-card-link open-journal-modal" data-article="carol-alex">
+                <div class="journal-img-wrapper">
+                  <img 
+                    src="assets/portfolio/carol-e-alex/carolealex-291.jpg" 
+                    alt="Casal abraçado ao pôr do sol" 
+                    loading="lazy" 
+                    decoding="async"
+                  >
+                </div>
+                <div class="journal-meta">
+                  <span class="journal-tag">História Completa</span>
+                  <span class="dot-divider">•</span>
+                  <time datetime="2024-08-20">Agosto de 2024</time>
+                </div>
+                <h3 class="journal-title">A celebração autêntica de Carol & Alex</h3>
+                <p class="journal-excerpt">
+                  Luz dourada, risos descalços e a promessa de nunca deixar a rotina apagar a ternura e a verdade de cada olhar.
+                </p>
+                <span class="read-more">Ler Crônica <span aria-hidden="true">→</span></span>
+              </a>
+            </article>
+          </div>
+
+          <!-- Controles de Navegação do Carrossel Mobile -->
+          <div class="journal-carousel-controls" aria-label="Navegação das crônicas">
+            <button class="carousel-nav-btn prev" id="journalPrev" aria-label="Crônica anterior">‹</button>
+            <div class="carousel-dots" id="journalDots" role="tablist" aria-label="Indicadores das crônicas">
+              <button class="carousel-dot active" data-slide="0" aria-label="Crônica 1 de 2"></button>
+              <button class="carousel-dot" data-slide="1" aria-label="Crônica 2 de 2"></button>
+            </div>
+            <button class="carousel-nav-btn next" id="journalNext" aria-label="Próxima crônica">›</button>
+          </div>
         </div>
       </div>
     </section>
@@ -756,6 +769,48 @@
         <h3 class="dialog-title" id="dialogTitle"></h3>
         <p class="dialog-location" id="dialogLocation"></p>
       </div>
+    </div>
+  </dialog>
+
+  <!-- MODAL DE LEITURA EDITORIAL DE CRÔNICAS -->
+  <dialog class="journal-modal" id="journalModal" aria-labelledby="journalModalTitle">
+    <div class="journal-modal-inner">
+      <button class="journal-modal-close-btn" id="journalModalClose" aria-label="Fechar crônica">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <article class="journal-modal-article">
+        <header class="journal-modal-header">
+          <div class="journal-modal-meta">
+            <span class="journal-modal-tag" id="journalModalTag"></span>
+            <span class="dot-divider">•</span>
+            <time class="journal-modal-date" id="journalModalDate"></time>
+            <span class="dot-divider">•</span>
+            <span class="journal-modal-readtime" id="journalModalReadTime"></span>
+          </div>
+          <h2 class="journal-modal-title" id="journalModalTitle"></h2>
+          <p class="journal-modal-lead" id="journalModalLead"></p>
+        </header>
+
+        <div class="journal-modal-cover">
+          <img id="journalModalCover" src="" alt="" loading="lazy">
+        </div>
+
+        <div class="journal-modal-body" id="journalModalBody"></div>
+
+        <footer class="journal-modal-footer">
+          <div class="journal-modal-author">
+            <p class="journal-author-name">Rodrigo Zago</p>
+            <p class="journal-author-role">Fotografia & Filme • Memórias em Movimento</p>
+          </div>
+          <a href="#contato" class="btn btn-primary journal-modal-cta" id="journalModalCta">
+            Conversar sobre a nossa história <span aria-hidden="true" style="margin-left: 8px;">→</span>
+          </a>
+        </footer>
+      </article>
     </div>
   </dialog>
 

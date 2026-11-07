@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initLightboxDialog();
   initHighlightsCarousel();
   initCinemaSection();
+  initJournalCarousel();
+  initJournalModal();
   initTestimonialsSlider();
   initContactForm();
 });
@@ -718,6 +720,339 @@ function initCinemaSection() {
       videoPlayer.removeAttribute('src');
       videoPlayer.load();
     }
+    document.body.style.overflow = '';
+  });
+}
+
+/* ==========================================================================
+   CARROSSEL MOBILE DE CRÔNICAS & DIÁRIO
+   ========================================================================== */
+let isJournalSwiping = false;
+
+function initJournalCarousel() {
+  const track = document.getElementById('journalGrid');
+  const dotsContainer = document.getElementById('journalDots');
+  const prevBtn = document.getElementById('journalPrev');
+  const nextBtn = document.getElementById('journalNext');
+
+  if (!track || !dotsContainer) return;
+
+  const slides = Array.from(track.querySelectorAll('.journal-card'));
+  if (!slides.length) return;
+
+  const getStep = () => {
+    if (slides.length > 1) {
+      return slides[1].offsetLeft - slides[0].offsetLeft;
+    }
+    return slides[0].offsetWidth || track.clientWidth;
+  };
+
+  const updateActiveDot = () => {
+    const step = getStep();
+    if (!step) return;
+    const scrollLeft = track.scrollLeft;
+    const activeIndex = Math.min(Math.max(0, Math.round(scrollLeft / step)), slides.length - 1);
+
+    const dots = dotsContainer.querySelectorAll('.carousel-dot');
+    dots.forEach((dot, idx) => {
+      dot.classList.toggle('active', idx === activeIndex);
+    });
+  };
+
+  track.addEventListener('scroll', updateActiveDot, { passive: true });
+
+  const dots = dotsContainer.querySelectorAll('.carousel-dot');
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      const idx = parseInt(dot.getAttribute('data-slide'), 10);
+      if (slides[idx]) {
+        slides[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    });
+  });
+
+  prevBtn?.addEventListener('click', () => {
+    const step = getStep();
+    track.scrollBy({ left: -step, behavior: 'smooth' });
+  });
+
+  nextBtn?.addEventListener('click', () => {
+    const step = getStep();
+    track.scrollBy({ left: step, behavior: 'smooth' });
+  });
+
+  // Rastreamento de toque para evitar disparar abertura da crônica durante o swipe no celular
+  let touchStartX = 0;
+  let touchStartY = 0;
+
+  track.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 1) {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      isJournalSwiping = false;
+    }
+  }, { passive: true });
+
+  track.addEventListener('touchmove', (e) => {
+    if (e.touches.length === 1) {
+      const dx = Math.abs(e.touches[0].clientX - touchStartX);
+      const dy = Math.abs(e.touches[0].clientY - touchStartY);
+      if (dx > 8 || dy > 8) {
+        isJournalSwiping = true;
+      }
+    }
+  }, { passive: true });
+}
+
+/* ==========================================================================
+   MODAL DE LEITURA EDITORIAL DE CRÔNICAS
+   ========================================================================== */
+function initJournalModal() {
+  const dialog = document.getElementById('journalModal');
+  const closeBtn = document.getElementById('journalModalClose');
+  const tagEl = document.getElementById('journalModalTag');
+  const dateEl = document.getElementById('journalModalDate');
+  const readTimeEl = document.getElementById('journalModalReadTime');
+  const titleEl = document.getElementById('journalModalTitle');
+  const leadEl = document.getElementById('journalModalLead');
+  const coverEl = document.getElementById('journalModalCover');
+  const bodyEl = document.getElementById('journalModalBody');
+
+  if (!dialog) return;
+
+  const journalArticles = {
+    'grao-analogico': {
+      tag: 'Ensaio Intimista',
+      date: 'Setembro de 2024',
+      readTime: '4 min de leitura',
+      title: 'Por que escolhemos a luz natural e o grão analógico',
+      lead: 'A perfeição digital muitas vezes apaga a pulsação do instante. Uma reflexão sobre a poesia da imperfeição em tempos de filtros imediatos.',
+      cover: 'assets/portfolio/aniversario-fashion/a7r01749.jpg',
+      coverAlt: 'Noiva caminhando descalça entre a vegetação suave em luz natural',
+      body: `
+        <p class="article-paragraph">
+          Vivemos numa era fascinada por sensores hiperdimensionados, contagem cirúrgica de pixels e algoritmos de inteligência que suavizam a pele antes mesmo de o obturador se fechar. As câmeras modernas são quase milagrosas: enxergam no escuro absoluto e eliminam qualquer vestígio de sombra. Mas a pergunta que me acompanha em cada casamento é simples: <em>a memória humana realmente funciona como um arquivo digital sem ruído?</em>
+        </p>
+
+        <p class="article-paragraph">
+          Quando fechamos os olhos e resgatamos a lembrança de um abraço apertado de dez anos atrás, não nos lembramos do balanço de branco milimetricamente neutro. Lembramos da temperatura do quarto. Da luz oblíqua da tarde que batia na lateral do rosto. Da poeira dourada flutuando suspensa no ar. Da sensação quase tátil e imperfeita de estar vivo naquele instante.
+        </p>
+
+        <blockquote class="article-quote">
+          “A perfeição clínica muitas vezes anestesia o afeto. O grão analógico não é um defeito técnico; ele é a própria textura do tempo assentando sobre a imagem.”
+        </blockquote>
+
+        <h3 class="article-subheading">O grão como matéria viva</h3>
+
+        <p class="article-paragraph">
+          Na fotografia analógica e nas lentes ópticas manuais que escolho para documentar histórias de amor, o grão desempenha o papel da textura em uma folha de papel de algodão feita à mão. Ele confere densidade, peso e calor. Uma fotografia que respira através do grão não parece ter sido gerada por uma máquina fria; ela parece ter sido moldada pela luz física incidindo sobre a matéria.
+        </p>
+
+        <p class="article-paragraph">
+          O grão acolhe a imperfeição. Ele aceita com nobreza um movimento sutil do véu na brisa, um beijo roubado que desfocou levemente porque o coração bateu mais rápido do que a mecânica da câmera, ou a lágrima que escorreu sem pedir licença sob a luz quente das velas.
+        </p>
+
+        <h3 class="article-subheading">A luz natural: paciência e respeito ao silêncio</h3>
+
+        <p class="article-paragraph">
+          Instalar cinco tripés com iluminação estroboscópica artificial em volta de um altar ou numa capela íntima pode até produzir uma foto uniforme para catálogos comerciais, mas destrói o que havia de mais sagrado: a atmosfera original daquele espaço.
+        </p>
+
+        <p class="article-paragraph">
+          A luz natural exige uma virtude rara: a humildade de observar. Ela pede que o fotógrafo compreenda o caminho do sol, identifique a janela mágica das 17h30 quando as sombras se alongam com doçura e saiba dançar com a penumbra. Quando não invadimos o ambiente com disparos ofuscantes de flash, os noivos e seus familiares esquecem que estão sendo fotografados. Eles não posam para a lente; eles habitam o seu próprio amor.
+        </p>
+
+        <blockquote class="article-quote">
+          “Fotografar sem pressa é o único caminho para que a imagem não envelheça como moda, mas amadureça como herança.”
+        </blockquote>
+
+        <h3 class="article-subheading">Para daqui a cinquenta anos</h3>
+
+        <p class="article-paragraph">
+          As resoluções digitais de hoje parecerão datadas e primitivas daqui a duas décadas. Mas a luz da tarde sobre os cabelos, o toque desarmado das mãos no altar e a poesia do grão são atemporais.
+        </p>
+
+        <p class="article-paragraph">
+          Quando os filhos ou netos de vocês abrirem o álbum físico sobre a mesa de jantar, não queremos que eles vejam uma tendência estética passageira. Queremos que eles sintam o pulso acelerado, o arrepio no antebraço e a verdade límpida de duas pessoas que escolheram caminhar juntas.
+        </p>
+      `
+    },
+    'carol-alex': {
+      tag: 'História Completa & Bastidores',
+      date: 'Agosto de 2024',
+      readTime: '6 min de leitura',
+      title: 'A celebração autêntica de Carol & Alex',
+      lead: 'Luz dourada, risos descalços e a promessa de nunca deixar a rotina apagar a ternura e a verdade de cada olhar. Como funciona a nossa cobertura na prática baseada no briefing do grande dia.',
+      cover: 'assets/portfolio/carol-e-alex/carolealex-291.jpg',
+      coverAlt: 'Carol e Alex abraçados na luz dourada do entardecer',
+      body: `
+        <p class="article-paragraph">
+          Quem vê as fotografias e o filme de casamento de Carol & Alex — com seus risos descalços na grama, o véu dançando na luz de poente e a emoção solene da capela — costuma imaginar que tudo aconteceu por mero acaso. Mas a verdade é que a espontaneidade mais pura só floresce onde existe um método invisível, rigoroso e acolhedor nos bastidores.
+        </p>
+
+        <p class="article-paragraph">
+          Muitos casais nos procuram com o mesmo receio legítimo: <em>“Rodrigo, nós não somos modelos, não sabemos posar e não queremos passar a nossa festa inteira presos a um fotógrafo nos dando ordens.”</em> É por isso que, semanas antes de cada celebração, realizamos o nosso <strong>Briefing de Cobertura Autoral</strong>.
+        </p>
+
+        <p class="article-paragraph">
+          A história de Carol & Alex foi construída em cima desse exato roteiro. A seguir, abrimos os bastidores de como funciona a nossa cobertura na prática — para que você entenda exatamente o que esperar no seu grande dia.
+        </p>
+
+        <blockquote class="article-quote">
+          “Uma tarde de cerimônia, uma noite de festa. Discretos e quase invisíveis na primeira parte; soltos, cúmplices e imersos na segunda.”
+        </blockquote>
+
+        <h3 class="article-subheading">1. O Roteiro das Sete Horas: Do make-off ao encerramento</h3>
+
+        <p class="article-paragraph">
+          O tempo de um casamento não pode ser fatiado como uma linha de montagem. O nosso cronograma é desenhado para fluir com o ritmo natural das emoções:
+        </p>
+
+        <div class="article-timeline">
+          <div class="timeline-step">
+            <div class="step-time">15h00</div>
+            <div class="step-content">
+              <strong>Make-off íntimo com a família</strong>
+              <p>Chegamos uma hora antes do início para nos integrarmos ao ambiente com calma. Nada de poses clichês com cabides suspensos: registramos o café compartilhado, as piadas internas dos padrinhos, a mãe abotoando o vestido com as mãos trêmulas e os primeiros retratos poéticos em luz natural.</p>
+            </div>
+          </div>
+
+          <div class="timeline-step">
+            <div class="step-time">15h30</div>
+            <div class="step-content">
+              <strong>Chegada dos convidados & Primeiros encontros</strong>
+              <p>O reencontro de amigos de longa data, os abraços calorosos na entrada, a entrega das lembranças e a expectativa que paira no ar antes da marcha começar.</p>
+            </div>
+          </div>
+
+          <div class="timeline-step">
+            <div class="step-time">16h00</div>
+            <div class="step-content">
+              <strong>A Celebração / Missa na Capela</strong>
+              <p>Aqui vigora o silêncio e o respeito absoluto ao sagrado. Não usamos flashes invasivos; alinhamos previamente com o celebrante onde podemos circular com movimento mínimo. O foco é a lágrima contida dos pais, o olhar recíproco no altar e a bênção das alianças.</p>
+            </div>
+          </div>
+
+          <div class="timeline-step">
+            <div class="step-time">17h00</div>
+            <div class="step-content">
+              <strong>Recepção, Antepastos & Descompressão</strong>
+              <p>O momento do primeiro brinde. O casal respira, cumprimenta os mais próximos e desfruta dos sabores da recepção sem nenhuma interrupção.</p>
+            </div>
+          </div>
+
+          <div class="timeline-step">
+            <div class="step-time">17h30 às 18h15</div>
+            <div class="step-content">
+              <strong>A Janela Dourada: Retratos do casal no Pôr do Sol</strong>
+              <p>Com o sol baixo e a luz dourada rasgando o horizonte, tiramos o casal por apenas 25 a 30 minutos. É um instante de respiro a dois: caminhadas leves, abraços espontâneos e retratos atemporais sem roubá-los da festa.</p>
+            </div>
+          </div>
+
+          <div class="timeline-step">
+            <div class="step-time">18h00 até o fim</div>
+            <div class="step-content">
+              <strong>Banda, DJ & A Euforia Desarmada</strong>
+              <p>Com a noite instalada, nossa linguagem muda. Entramos na pista com lentes grande-angulares e luz de preenchimento dinâmica, celebrando junto com os convidados até os últimos instantes da festa.</p>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="article-subheading">2. A Lista das Catorze Fotos Essenciais</h3>
+
+        <p class="article-paragraph">
+          Um dos maiores receios dos noivos é esquecer de registrar alguém importante — ou, pelo contrário, perder horas em filas cansativas de cumprimentos protocolares. 
+        </p>
+
+        <p class="article-paragraph">
+          Para isso, operamos com a nossa lista de prioridades combinadas: fotos formais com pais, avós, irmãos e padrinhos são executadas com precisão cirúrgica e simpatia imediatamente ao término da cerimônia. Em menos de 15 minutos, todos os registros fundamentais para as próximas gerações estão garantidos, e o casal está livre para dançar.
+        </p>
+
+        <h3 class="article-subheading">3. A Dinâmica dos Dois Fotógrafos</h3>
+
+        <p class="article-paragraph">
+          Nenhum momento decisivo se repete. Por isso, a nossa equipe atua sempre em sintonia fina:
+        </p>
+
+        <ul class="article-checklist">
+          <li><strong>Rodrigo Zago (Fotógrafo Principal):</strong> Condução dos retratos do casal, acompanhamento próximo dos noivos no altar, controle da lista de fotos familiares e olhar atento à narrativa principal.</li>
+          <li><strong>Segundo Fotógrafo:</strong> Olhar periférico — captura a cenografia e detalhes antes dos convidados entrarem, o ângulo oposto na capela, as risadas descontraídas nas mesas e a energia viva do bar de drinks.</li>
+        </ul>
+
+        <h3 class="article-subheading">4. Segurança Inegociável nos Bastidores</h3>
+
+        <p class="article-paragraph">
+          A poesia só existe quando a retaguarda técnica é imbatível. Todas as nossas câmeras gravam simultaneamente em dois cartões de memória de alta velocidade (backup instantâneo a cada clique). Carregamos equipamento reserva idêntico no local e, ao término do evento, os arquivos passam por backup imediato em dois dispositivos físicos e na nuvem.
+        </p>
+
+        <blockquote class="article-quote">
+          “A nossa promessa em cada celebração: a lista de fotos está com a gente, os horários estão combinados e ninguém vai precisar lembrar de nada. A sua única tarefa é viver esse dia.”
+        </blockquote>
+
+        <p class="article-paragraph">
+          Foi exatamente assim que Carol & Alex viveram a sua celebração: leves, presentes e inteiros em cada segundo. E quando você olhar para as suas fotografias amanhã, é essa mesma sensação de paz e autenticidade que queremos que você encontre.
+        </p>
+      `
+    }
+  };
+
+  const openArticle = (articleKey) => {
+    const data = journalArticles[articleKey];
+    if (!data) return;
+
+    if (tagEl) tagEl.textContent = data.tag;
+    if (dateEl) dateEl.textContent = data.date;
+    if (readTimeEl) readTimeEl.textContent = data.readTime;
+    if (titleEl) titleEl.textContent = data.title;
+    if (leadEl) leadEl.textContent = data.lead;
+    if (coverEl) {
+      coverEl.src = data.cover;
+      coverEl.alt = data.coverAlt || data.title;
+    }
+    if (bodyEl) bodyEl.innerHTML = data.body;
+
+    if (!dialog.open) {
+      dialog.showModal();
+    }
+    document.body.style.overflow = 'hidden';
+    if (closeBtn) closeBtn.blur();
+  };
+
+  const closeArticle = () => {
+    if (dialog.open) {
+      dialog.close();
+    }
+    document.body.style.overflow = '';
+  };
+
+  // Listener para os cards e links de ler crônica
+  const articleTriggers = document.querySelectorAll('.open-journal-modal, .journal-card');
+  articleTriggers.forEach(el => {
+    el.addEventListener('click', (e) => {
+      if (isJournalSwiping) return; // Não abre modal se o usuário estiver apenas deslizando o carrossel no celular
+      const card = el.closest('.journal-card');
+      const articleKey = card ? card.getAttribute('data-article') : el.getAttribute('data-article');
+      if (articleKey && journalArticles[articleKey]) {
+        e.preventDefault();
+        openArticle(articleKey);
+      }
+    });
+  });
+
+  closeBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    closeArticle();
+  });
+
+  // Fechar ao clicar no backdrop (fora do container da crônica)
+  dialog?.addEventListener('click', (event) => {
+    const inner = dialog.querySelector('.journal-modal-article');
+    if (inner && !inner.contains(event.target)) {
+      closeArticle();
+    }
+  });
+
+  dialog?.addEventListener('cancel', () => {
     document.body.style.overflow = '';
   });
 }
