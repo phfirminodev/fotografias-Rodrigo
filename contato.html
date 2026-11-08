@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conte-me a História de Vocês — Rodrigo Zago Fotografia & Filme</title>
+  <meta name="description" content="Inicie a conversa sobre a fotografia e o filme do casamento de vocês com Rodrigo Zago. Envie os detalhes e fale diretamente pelo WhatsApp.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@200;300;400;500;600&family=Tenor+Sans&display=swap" rel="stylesheet">
+
+  <!-- Estilos Globais -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="contact-standalone-page">
+
+  <!-- HEADER NAVEGAÇÃO -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-container">
+      <nav class="nav-desktop-left" aria-label="Navegação principal">
+        <ul class="nav-links">
+          <li><a href="index.html#historias" class="nav-link">Histórias</a></li>
+          <li><a href="index.html#cinema" class="nav-link">Cinema</a></li>
+          <li><a href="index.html#sobre" class="nav-link">Sobre Mim</a></li>
+          <li><a href="index.html#experiencia" class="nav-link">A Experiência</a></li>
+        </ul>
+      </nav>
+
+      <div class="brand-monogram">
+        <a href="index.html" class="logo-link" aria-label="Rodrigo Zago — Ir para a página inicial">
+          <div class="monogram-circle">
+            <span class="monogram-text">RZ</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="nav-action-group">
+        <a href="index.html#diario" class="nav-link desktop-only">Diário</a>
+        <a href="contato.html" class="btn btn-primary-sm">Vamos Conversar</a>
+        <button class="mobile-toggle" id="mobileToggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Abrir menu de navegação">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Menu Mobile Drawer -->
+    <div class="mobile-drawer" id="mobileMenu" aria-hidden="true">
+      <div class="drawer-content">
+        <ul class="mobile-nav-list">
+          <li><a href="index.html#manifesto" class="mobile-nav-link">Manifesto</a></li>
+          <li><a href="index.html#sobre" class="mobile-nav-link">Sobre Mim</a></li>
+          <li><a href="index.html#historias" class="mobile-nav-link">Histórias & Galeria</a></li>
+          <li><a href="index.html#cinema" class="mobile-nav-link">Cinema & Filmes</a></li>
+          <li><a href="index.html#depoimentos" class="mobile-nav-link">Ecos de Afeto</a></li>
+          <li><a href="index.html#experiencia" class="mobile-nav-link">A Experiência</a></li>
+          <li><a href="index.html#diario" class="mobile-nav-link">Diário & Crônicas</a></li>
+          <li><a href="contato.html" class="mobile-nav-link highlight">Iniciar Nossa Conversa</a></li>
+        </ul>
+        <div class="mobile-drawer-footer">
+          <p class="drawer-note">Disponível em todo o Brasil & Destinos Internacionais</p>
+          <div class="drawer-socials">
+            <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- SEÇÃO DE FORMULÁRIO DE CONTATO (INTEGRAÇÃO WHATSAPP) -->
+  <main class="contact-page-main" style="padding-top: calc(var(--header-height) + clamp(2.5rem, 5vw, 4.5rem)); padding-bottom: clamp(5rem, 8vw, 8rem);">
+    <div class="container contact-container">
+      <div class="contact-intro">
+        <div style="margin-bottom: 1.5rem;">
+          <a href="javascript:history.back()" id="contactBackBtn" style="display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-accent); font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent-terracotta);">
+            ← Voltar para a crônica
+          </a>
+        </div>
+        <p class="section-tagline">VAMOS COMEÇAR</p>
+        <h1 class="section-heading" style="font-size: clamp(2.2rem, 4.5vw, 3.2rem);">Conte-me a História de Vocês</h1>
+        <p class="contact-lead">
+          Não existe pergunta boba nem detalhe pequeno demais. Se vocês sentem que nossa sintonia faz sentido, preencham as perguntas ao lado. A história de vocês será formatada com carinho e o WhatsApp será aberto para falarmos diretamente.
+        </p>
+        <div class="contact-direct-info">
+          <p><strong>Atendimento:</strong> Casamentos e viagens por onde o amor chamar.</p>
+        </div>
+      </div>
+
+      <div class="form-wrapper">
+        <form class="intimate-form" id="contactForm" novalidate>
+          <div class="form-group">
+            <label for="names" class="form-label">Como devemos chamar vocês dois?</label>
+            <input type="text" id="names" name="names" class="form-input" placeholder="Ex: Luísa & Gabriel" required>
+            <span class="field-error" id="namesError" aria-live="polite"></span>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email" class="form-label">O melhor e-mail de vocês</label>
+              <input type="email" id="email" name="email" class="form-input" placeholder="exemplo@gmail.com" required>
+              <span class="field-error" id="emailError" aria-live="polite"></span>
+            </div>
+            <div class="form-group">
+              <label for="location" class="form-label">Onde sonham em celebrar?</label>
+              <input type="text" id="location" name="location" class="form-input" placeholder="Ex: Serra, praia, bosque ou em casa">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="date" class="form-label">Data prevista ou época do ano</label>
+            <input type="text" id="date" name="date" class="form-input" placeholder="Ex: Outubro de 2025 ou Primavera">
+          </div>
+
+          <div class="form-group">
+            <label for="story" class="form-label">O que faz o coração de vocês vibrar quando pensam nesse dia?</label>
+            <textarea id="story" name="story" class="form-textarea" rows="4" placeholder="Contem-me um instante, uma música, ou o sentimento que vocês mais desejam guardar para sempre..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="discovery" class="form-label">Como o caminho de vocês encontrou o meu?</label>
+            <select id="discovery" name="discovery" class="form-select">
+              <option value="" disabled selected>Selecione uma opção carinhosa...</option>
+              <option value="cronicas" selected>Lendo as Crônicas no site</option>
+              <option value="instagram">Instagram / Fotos que vi por lá</option>
+              <option value="indicacao">Indicação de amigos queridos ou fornecedor</option>
+              <option value="pinterest">Pinterest / Inspirações salvas</option>
+              <option value="google">Busca no Google</option>
+              <option value="outro">Outro acaso bonito</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block" id="submitBtn">
+            <span class="btn-text">Enviar Nossa História no WhatsApp</span>
+            <span class="spinner" aria-hidden="true"></span>
+          </button>
+        </form>
+
+        <!-- Confirmação Acolhedora -->
+        <div class="form-success-card" id="formSuccess" style="display: none;" role="alert">
+          <h3 class="success-heading">História encaminhada com afeto!</h3>
+          <p class="success-message">
+            Sua história foi formatada com carinho e o WhatsApp foi aberto para falar diretamente com o Rodrigo Zago.
+          </p>
+          <p class="success-message" style="font-size: 0.9rem; margin-bottom: 1.5rem; opacity: 0.85;">
+            Caso a conversa não tenha aberto automaticamente, clique no botão abaixo para enviar:
+          </p>
+          <div>
+            <a href="https://wa.me/5561998685870" id="whatsappFallbackBtn" target="_blank" rel="noopener" class="btn btn-primary" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; text-decoration: none; padding: 0.9rem 2rem;">
+              <span>Abrir conversa no WhatsApp</span>
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+          <p class="success-sign" style="margin-top: 2rem;">— Rodrigo Zago</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- RODAPÉ EDITORIAL -->
+  <footer class="site-footer">
+    <div class="container footer-container">
+      <div class="footer-col brand-col">
+        <a href="index.html" class="footer-logo">Rodrigo Zago</a>
+        <p class="footer-manifesto-mini">
+          Fotografia e cinema de casamento com alma, luz natural e silêncio. Criado para atravessar gerações sem perder a ternura do instante.
+        </p>
+        <p class="footer-copyright">
+          © 2026 Rodrigo Zago. Todos os direitos reservados.
+        </p>
+      </div>
+
+      <div class="footer-col nav-col">
+        <h5 class="footer-title">Navegação</h5>
+        <ul class="footer-nav">
+          <li><a href="index.html#manifesto">Manifesto</a></li>
+          <li><a href="index.html#sobre">Sobre Mim</a></li>
+          <li><a href="index.html#historias">Histórias</a></li>
+          <li><a href="index.html#cinema">Cinema</a></li>
+          <li><a href="index.html#depoimentos">Ecos de Afeto</a></li>
+          <li><a href="index.html#experiencia">A Experiência</a></li>
+          <li><a href="index.html#diario">Diário</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col connection-col">
+        <h5 class="footer-title">Conexão & Afeto</h5>
+        <ul class="footer-nav">
+          <li><a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="contato.html">Fale comigo pelo formulário</a></li>
+        </ul>
+        <div class="footer-back-to-top">
+          <a href="#siteHeader" class="back-link">Voltar ao início ↑</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
