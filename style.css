@@ -477,9 +477,22 @@ button {
   align-items: center;
 }
 
+/* Animação suave de entrada editorial para os elementos do Hero */
+@keyframes editorialFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .hero-logo-heading {
   margin: 0 0 2.2rem;
   line-height: 0;
+  animation: editorialFadeUp 0.95s var(--transition-smooth) 0.1s both;
 }
 .hero-logo {
   width: clamp(260px, 46vw, 600px);
@@ -496,6 +509,7 @@ button {
   color: var(--bg-surface);
   max-width: 760px;
   margin-bottom: 1.4rem;
+  animation: editorialFadeUp 1.05s var(--transition-smooth) 0.25s both;
 }
 
 .hero-subtext {
@@ -504,6 +518,7 @@ button {
   color: rgba(234, 230, 220, 0.82);
   max-width: 540px;
   margin-bottom: 2.4rem;
+  animation: editorialFadeUp 1.05s var(--transition-smooth) 0.4s both;
 }
 
 .hero-actions {
@@ -512,6 +527,7 @@ button {
   flex-wrap: wrap;
   align-items: center;
   gap: 1.5rem;
+  animation: editorialFadeUp 1.05s var(--transition-smooth) 0.55s both;
 }
 
 .hero-section .btn-outline {
@@ -2690,4 +2706,107 @@ button {
   color: var(--accent-terracotta);
   margin: 0;
 }
+
+/* ==========================================================================
+   SISTEMA DE ANIMAÇÕES AO ROLAR A PÁGINA (SCROLL REVEAL EDITORIAL)
+   ========================================================================== */
+
+/* Ativado via JavaScript (apenas se o navegador suportar IntersectionObserver) */
+html.has-scroll-reveal .reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.85s var(--transition-smooth),
+              transform 0.85s var(--transition-smooth);
+  transition-delay: var(--reveal-delay, 0s);
+  will-change: opacity, transform;
+}
+
+/* Estado quando o elemento entra no campo visual ao rolar a página */
+html.has-scroll-reveal .reveal.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Variação: Suave aproximação de escala (ideal para retratos e cards especiais) */
+html.has-scroll-reveal .reveal.reveal-scale {
+  transform: scale(0.96) translateY(24px);
+  transition: opacity 0.95s var(--transition-smooth),
+              transform 0.95s var(--transition-smooth);
+}
+html.has-scroll-reveal .reveal.reveal-scale.is-revealed {
+  transform: scale(1) translateY(0);
+}
+
+/* Variação: Entrada lateral suave da esquerda (colunas de texto/intro) */
+html.has-scroll-reveal .reveal.reveal-from-left {
+  transform: translateX(-36px);
+  transition: opacity 0.9s var(--transition-smooth),
+              transform 0.9s var(--transition-smooth);
+}
+html.has-scroll-reveal .reveal.reveal-from-left.is-revealed {
+  transform: translateX(0);
+}
+
+/* Variação: Entrada lateral suave da direita (colunas de formulário/texto) */
+html.has-scroll-reveal .reveal.reveal-from-right {
+  transform: translateX(36px);
+  transition: opacity 0.9s var(--transition-smooth),
+              transform 0.9s var(--transition-smooth);
+}
+html.has-scroll-reveal .reveal.reveal-from-right.is-revealed {
+  transform: translateX(0);
+}
+
+/* Variação: Dissolução pura sem deslocamento (fade) */
+html.has-scroll-reveal .reveal.reveal-fade {
+  transform: none !important;
+  transition: opacity 1.1s var(--transition-smooth);
+}
+html.has-scroll-reveal .reveal.reveal-fade.is-revealed {
+  opacity: 1;
+}
+
+/* Ajustes para telas menores / celulares */
+@media (max-width: 768px) {
+  /* No celular, transforma deslocamentos laterais em suaves elevações verticais */
+  html.has-scroll-reveal .reveal.reveal-from-left,
+  html.has-scroll-reveal .reveal.reveal-from-right {
+    transform: translateY(24px);
+  }
+  html.has-scroll-reveal .reveal.reveal-from-left.is-revealed,
+  html.has-scroll-reveal .reveal.reveal-from-right.is-revealed {
+    transform: translateY(0);
+  }
+
+  /* Garante que os cards dentro de carrosséis horizontais fiquem perfeitamente prontos para touch swipe */
+  .highlights-carousel-wrapper.is-revealed .gallery-card,
+  .cinema-carousel-wrapper.is-revealed .cinema-card,
+  .journal-carousel-wrapper.is-revealed .journal-card {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Acessibilidade: respeita preferências de redução de movimento do sistema operacional */
+@media (prefers-reduced-motion: reduce) {
+  .hero-logo-heading,
+  .hero-manifesto,
+  .hero-subtext,
+  .hero-actions {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  html.has-scroll-reveal .reveal,
+  html.has-scroll-reveal .reveal.reveal-scale,
+  html.has-scroll-reveal .reveal.reveal-from-left,
+  html.has-scroll-reveal .reveal.reveal-from-right,
+  html.has-scroll-reveal .reveal.reveal-fade {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
 

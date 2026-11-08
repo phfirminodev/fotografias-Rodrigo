@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initJournalModal();
   initTestimonialsSlider();
   initContactForm();
+  initScrollReveal();
 });
 
 /* ==========================================================================
@@ -1056,4 +1057,109 @@ function initJournalModal() {
     document.body.style.overflow = '';
   });
 }
+
+/* ==========================================================================
+   SCROLL REVEAL ANIMATIONS (ANIMAÇÕES AO ROLAR A PÁGINA)
+   ========================================================================== */
+function initScrollReveal() {
+  if (!('IntersectionObserver' in window)) {
+    return; // Fallback seguro para navegadores legados
+  }
+
+  // Ativa a classe no elemento raiz para habilitar as transições
+  document.documentElement.classList.add('has-scroll-reveal');
+
+  // 1. Elementos que recebem a animação de revelação
+  const autoRevealSelectors = [
+    '.section-header-center',
+    '.journal-header',
+    '.timeline-header',
+    '.about-portrait-wrap',
+    '.about-text-wrap',
+    '.gallery-cta',
+    '.cinema-tabs-wrapper',
+    '.cinema-cta',
+    '.testimonial-card',
+    '.highlights-carousel-wrapper',
+    '.cinema-carousel-wrapper',
+    '.journal-carousel-wrapper',
+    '.contact-intro',
+    '.form-wrapper',
+    '.footer-col',
+    '.gallery-page-hero',
+    '.gallery-page-header',
+    '.gallery-filter-nav',
+    '.article-cover-wrap',
+    '.article-quote-box',
+    '.article-timeline',
+    '.article-checklist-wrap',
+    '.page-header-center'
+  ];
+
+  autoRevealSelectors.forEach(selector => {
+    document.querySelectorAll(selector).forEach(el => {
+      if (!el.classList.contains('reveal')) {
+        el.classList.add('reveal');
+      }
+    });
+  });
+
+  // Aplica estilos direcionais editoriais
+  document.querySelectorAll('.about-portrait-wrap').forEach(el => el.classList.add('reveal-scale'));
+  document.querySelectorAll('.about-text-wrap').forEach(el => el.classList.add('reveal-from-right'));
+  document.querySelectorAll('.contact-intro').forEach(el => el.classList.add('reveal-from-left'));
+  document.querySelectorAll('.form-wrapper').forEach(el => el.classList.add('reveal-from-right'));
+  document.querySelectorAll('.testimonial-card').forEach(el => el.classList.add('reveal-scale'));
+
+  // 2. Configuração dos containers com stagger (efeito cascata progressivo)
+  const staggerConfigs = [
+    { container: '.highlights-grid', item: '.gallery-card', delay: 100 },
+    { container: '.cinema-grid', item: '.cinema-card', delay: 120 },
+    { container: '.steps-grid', item: '.step-card', delay: 140 },
+    { container: '.journal-grid', item: '.journal-card', delay: 150 },
+    { container: '.footer-grid', item: '.footer-col', delay: 120 },
+    { container: '.masonry-grid', item: '.gallery-card, .quote-card', delay: 70, maxStagger: 6 },
+    { container: '.gallery-masonry', item: '.gallery-card', delay: 75, maxStagger: 6 },
+    { container: '.article-timeline', item: '.timeline-step', delay: 90 }
+  ];
+
+  staggerConfigs.forEach(({ container, item, delay, maxStagger }) => {
+    document.querySelectorAll(container).forEach(parent => {
+      const children = parent.querySelectorAll(item);
+      children.forEach((child, index) => {
+        child.classList.add('reveal');
+        const staggerIndex = maxStagger ? (index % maxStagger) : index;
+        child.style.setProperty('--reveal-delay', `${staggerIndex * delay}ms`);
+      });
+    });
+  });
+
+  // 3. Observer com margem favorável para disparar pouco antes do elemento atingir a linha visual
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px 0px -40px 0px',
+    threshold: 0.08
+  };
+
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const target = entry.target;
+        target.classList.add('is-revealed');
+        observer.unobserve(target);
+
+        // Após a animação de entrada, zera o delay para que futuras interações sejam instantâneas
+        setTimeout(() => {
+          target.style.setProperty('--reveal-delay', '0s');
+        }, 1200);
+      }
+    });
+  }, observerOptions);
+
+  // Observa todos os elementos marcados com .reveal
+  document.querySelectorAll('.reveal').forEach(el => {
+    revealObserver.observe(el);
+  });
+}
+
 
