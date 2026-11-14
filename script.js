@@ -711,9 +711,14 @@ function initCinemaSection() {
     videoPlayer.volume = 1.0;
 
     if (startTime > 0) {
-      try {
-        videoPlayer.currentTime = startTime;
-      } catch (err) {}
+      const setTime = () => {
+        try { videoPlayer.currentTime = startTime; } catch (err) {}
+      };
+      if (videoPlayer.readyState >= 1) {
+        setTime();
+      } else {
+        videoPlayer.addEventListener('loadedmetadata', setTime, { once: true });
+      }
     }
 
     if (dialogTitle) dialogTitle.textContent = title || '';
@@ -730,11 +735,13 @@ function initCinemaSection() {
       } catch (err) {}
     }
 
-    // Inicia reprodução imediatamente com áudio
+    // Inicia reprodução imediatamente com áudio (com fallback para mudo se bloqueado)
     const playPromise = videoPlayer.play();
     if (playPromise !== undefined) {
       playPromise.catch(err => {
-        console.warn('Reprodução do modal capturada:', err);
+        console.warn('Reprodução com som bloqueada pelo navegador, tentando mudo:', err);
+        videoPlayer.muted = true;
+        videoPlayer.play().catch(() => {});
       });
     }
   };
