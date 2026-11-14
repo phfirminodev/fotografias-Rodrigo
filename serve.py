@@ -27,6 +27,15 @@ class DualStackServer(ThreadingMixIn, HTTPServer):
         super().server_bind()
 
 class RangeRequestHandler(SimpleHTTPRequestHandler):
+    def translate_path(self, path):
+        translated = super().translate_path(path)
+        if not os.path.exists(translated):
+            # Fallback para a pasta local de backup de vídeos grandes
+            backup_candidate = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'video-backup', os.path.basename(translated)))
+            if os.path.isfile(backup_candidate):
+                return backup_candidate
+        return translated
+
     def end_headers(self):
         self.send_header('Accept-Ranges', 'bytes')
         super().end_headers()
