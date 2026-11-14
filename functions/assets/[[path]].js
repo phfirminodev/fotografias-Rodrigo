@@ -30,10 +30,18 @@ export async function onRequest(context) {
     const rangeHeader = request.headers.get('Range');
 
     // 3. Busca o objeto no R2 com suporte a Range Requests (streaming fracionado)
-    const object = await bucket.get(objectKey, {
+    let object = await bucket.get(objectKey, {
       range: request.headers,
       onlyIf: request.headers
     });
+
+    // Fallback: busca sem o prefixo 'assets/' caso os arquivos tenham sido subidos na raiz do bucket
+    if (!object) {
+      object = await bucket.get(subpath, {
+        range: request.headers,
+        onlyIf: request.headers
+      });
+    }
 
     // Se o arquivo não existir no bucket R2, tenta buscar nos arquivos estáticos do Pages
     if (!object) {
