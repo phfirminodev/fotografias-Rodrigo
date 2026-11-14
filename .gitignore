@@ -1,0 +1,18 @@
+# ==============================================================================
+# CLOUDFLARE PAGES / R2 — EXCLUSÕES DO GIT
+# ==============================================================================
+# Os vídeos em formato MP4 excedem o limite de 25MB por arquivo do Cloudflare Pages
+# e são servidos diretamente a partir do Cloudflare R2:
+assets/video/*.mp4
+
+# Arquivos temporários do sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs e arquivos de depuração
+*.log
+node_modules/
+scratch/
+.vscode/
+.idea/

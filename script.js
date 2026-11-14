@@ -2,7 +2,55 @@
  * RODRIGO ZAGO FOTOGRAFIA & FILME — INTERAÇÕES & COMPORTAMENTO (UX)
  */
 
+/**
+ * Retorna o caminho de um ativo aplicando a URL da CDN (Cloudflare R2),
+ * caso esteja configurada em config.js (window.RZ_CONFIG.cdnUrl)
+ */
+function getAssetUrl(path) {
+  if (!path) return '';
+  if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('data:')) {
+    return path;
+  }
+  const cdn = (window.RZ_CONFIG && window.RZ_CONFIG.cdnUrl) ? window.RZ_CONFIG.cdnUrl.replace(/\/+$/, '') : '';
+  if (!cdn) return path;
+  const cleanPath = path.replace(/^\/+/, '');
+  return `${cdn}/${cleanPath}`;
+}
+
+/**
+ * Aplica automaticamente a URL da CDN aos elementos de mídia da página
+ * caso cdnUrl esteja configurado em config.js
+ */
+function applyCdnMediaUrls() {
+  if (!window.RZ_CONFIG || !window.RZ_CONFIG.cdnUrl) return;
+
+  // Atualiza elementos de vídeo e seus pôsteres
+  document.querySelectorAll('video[src], [data-video-src], video[poster]').forEach(el => {
+    const src = el.getAttribute('src');
+    if (src && !src.startsWith('http')) {
+      el.src = getAssetUrl(src);
+    }
+    const dataSrc = el.getAttribute('data-video-src');
+    if (dataSrc && !dataSrc.startsWith('http')) {
+      el.setAttribute('data-video-src', getAssetUrl(dataSrc));
+    }
+    const poster = el.getAttribute('poster');
+    if (poster && !poster.startsWith('http')) {
+      el.setAttribute('poster', getAssetUrl(poster));
+    }
+  });
+
+  // Atualiza imagens de portfólio e crônicas
+  document.querySelectorAll('img[src^="assets/"]').forEach(img => {
+    const src = img.getAttribute('src');
+    if (src && !src.startsWith('http')) {
+      img.src = getAssetUrl(src);
+    }
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  applyCdnMediaUrls();
   initHeaderScroll();
   initMobileMenu();
   initGalleryFilter();
@@ -651,9 +699,11 @@ function initCinemaSection() {
   const openVideo = (src, title, subtitle, startTime = 0) => {
     if (!videoPlayer || !dialog) return;
 
+    const resolvedSrc = getAssetUrl(src);
+
     // Atualiza a fonte e garante carregamento limpo
-    if (videoPlayer.getAttribute('src') !== src) {
-      videoPlayer.src = src;
+    if (videoPlayer.getAttribute('src') !== resolvedSrc) {
+      videoPlayer.src = resolvedSrc;
       videoPlayer.load();
     }
 
@@ -1007,7 +1057,7 @@ function initJournalModal() {
     if (titleEl) titleEl.textContent = data.title;
     if (leadEl) leadEl.textContent = data.lead;
     if (coverEl) {
-      coverEl.src = data.cover;
+      coverEl.src = getAssetUrl(data.cover);
       coverEl.alt = data.coverAlt || data.title;
     }
     if (bodyEl) bodyEl.innerHTML = data.body;
